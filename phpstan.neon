@@ -1,0 +1,33 @@
+includes:
+    - vendor/phpstan/phpstan/conf/bleedingEdge.neon
+parameters:
+    scanFiles:
+        - vendor/symfony/validator/Test/ConstraintValidatorTestCase.php
+    symfony:
+        container_xml_path: var/cache/dev/App_KernelDevDebugContainer.xml
+    level: 8
+    parallel:
+        maximumNumberOfProcesses: 16
+    paths:
+        - src
+        - tests
+    excludePaths:
+        - src/Domain/Dictionary/Mcc.php
+    checkGenericClassInNonGenericObjectType: true # https://phpstan.org/blog/generics-in-php-using-phpdocs
+    reportUnmatchedIgnoredErrors: false
+    checkMissingIterableValueType: true # Enforce all iterables to have type defined https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type
+    universalObjectCratesClasses:
+        - App\Domain\Settings\SystemSettings # Implements ArrayAccess and magic getter
+    ignoreErrors:
+        -
+            message: '#Cannot cast array<string, mixed>\|int\|object\|null to int#' # execute() can return various types of data. We are always casting it manually
+            path: src/Infrastructure/Repository/
+        -
+            message: '#Readonly property .*Test(Case)?::\$.* is assigned outside of the constructor#' # It should be allowed to set readonly properties in setUp() method.
+            path: tests
+        -
+            message: '#generic class Onfido\\Model#' # Vendor's invalid generic annotations
+            path: src
+        -
+            message: '#contains generic type Symfony\\Component\\Validator#' # Do not need to declare generic type in symofny 6.0. It is only applicable starting from 6.1
+            path: tests

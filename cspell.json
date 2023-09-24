@@ -1,0 +1,57 @@
+{
+    "version": "0.2",
+    "language": "en",
+    "files": [
+        "src/**/*.php",
+        "templates/**",
+        "translations/**/*.en.*",
+        "tests/**/*.php",
+        "assets/**/*.ts"
+    ],
+    "ignorePaths": [
+        "src/**/Mcc.php",
+        "assets/vendor/**/*",
+        "assets/i18n/**",
+        "node_modules/**",
+        "public/**",
+        "vendor/**",
+        "var/**"
+    ],
+    "dictionaries": [
+        "php"
+    ],
+    "words": [
+        "phpstan",
+        "cloudinary",
+        "vich",
+        "elao",
+        "flysystem",
+        "onfido",
+        "pagerfanta",
+        "sensio",
+        "gedmo",
+        "timestampable",
+        "deleteable",
+        "stringable",
+        "Mailjet",
+        "Hasher",
+        "Passwordless",
+        "Inflector",
+        "Classable",
+        "iconable",
+        "iban",
+        "readables",
+        "Renderable",
+        "tableize",
+        "scheb",
+        "fortawesome",
+        "fontawesome",
+        "overlayscrollbars",
+        "Scrollbars",
+        "chatbox",
+        "hdbank",
+        "bankofmaldives",
+        "circleci",
+        "Geniebiz"
+    ]
+}
