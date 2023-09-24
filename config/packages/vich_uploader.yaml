@@ -1,0 +1,28 @@
+vich_uploader:
+    db_driver: mongodb
+    storage: flysystem
+    metadata:
+        type: attribute
+
+    #mappings:
+    #    products:
+    #        uri_prefix: /images/products
+    #        upload_destination: '%kernel.project_dir%/public/images/products'
+
+    mappings:
+        compliance_files:
+            upload_destination: 'compliance_reports.storage'
+            namer:
+                service: App\Infrastructure\Storage\Upload\CompanyFileNamer
+
+        cloudinary_images:
+            upload_destination: 'cloudinary.storage'
+            uri_prefix: /uploads/images/cloudinary
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            delete_on_remove: false
+            delete_on_update: false
+
+        email_attachments:
+            upload_destination: 'attachments.storage'
+            namer:
+                service: App\Infrastructure\Storage\Upload\CompanyFileNamer

@@ -1,0 +1,65 @@
+{% extends 'common/base.html.twig' %}
+{% import '/common/macros/macros.html.twig' as commonMacros %}
+{% block title %} {{ item.countryname }} {% endblock %}
+
+{% block back_url %}{{ path('configuration_country_index') }}{% endblock %}
+
+{% set title , subTitle  = 'config_country.title'|trans(), 'config_country.subTitle'|trans() %}
+
+{# @var item \App\Domain\Document\Country #}
+
+{% block paragraph %}
+    <div class="card-body bg-light border-top">
+        <div class="row mb-3">
+                <div class="col-lg col-xxl-6">
+                    <div class="row">
+                        <div class="col-6 col-sm-4">
+                            <p class="fw-semi-bold mb-1">{{ 'config_country.label.countryName'|trans }}</p>
+                        </div>
+                        <div class="col">
+                            {{ item.countryName | default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 col-sm-4">
+                            <p class="fw-semi-bold mb-1">{{ 'config_country.label.countryCode'|trans }}</p>
+                        </div>
+                        <div class="col">
+                            {{ item.countryCode | default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 col-sm-4">
+                            <p class="fw-semi-bold mb-1">{{ 'config_country.label.flag'|trans }}</p>
+                        </div>
+                        <div class="col">
+                            {{ item.flag | default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg col-xxl-6">
+                    <div class="row">
+                        <div class="col-6 col-sm-4">
+                            <p class="fw-semi-bold mb-1">{{ 'config_country.label.dialingCode'|trans }}</p>
+                        </div>
+                        <div class="col">
+                            {{ item.dialingCode | default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 col-sm-4">
+                            <p class="fw-semi-bold mb-1">{{ 'config_country.label.enabled'|trans }}</p>
+                        </div>
+                        <div class="col">
+                            {{ commonMacros.booleanLabel(item.enabled) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

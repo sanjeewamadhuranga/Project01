@@ -1,0 +1,22 @@
+liip_monitor:
+    # enabling the controller requires that `assets` are enabled in the framework bundle
+    enable_controller: false
+
+    checks:
+        groups:
+            public:
+                php_extensions:
+                    - ctype
+                    - intl
+                    - mongodb
+                    - iconv
+                    - zip
+                    - gd
+                    - curl
+                    - xml
+                    - mbstring
+                doctrine_mongodb: [default]
+
+when@dev:
+    liip_monitor:
+        enable_controller: true

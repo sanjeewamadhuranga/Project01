@@ -1,0 +1,7 @@
+# This file contains regular expressions of deprecation messages to ignore during tests.
+
+# Onfido deprecations (fixed in OpenAPITools/openapi-generator v6.0.0, waiting for Onfido to catch up)
+%Return type of Onfido\\Model\\.* should either be compatible with%
+
+# Generated collection classed for custom Doctrine Collection implement PersistentCollectionInterface which is internal.
+%"PersistentCollections\\AppDomainCollection%

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html class="{% block html_class %}{% endblock %}" dir="{{ intl_direction() }}" lang="{{ app.request.locale }}">
+    {% set theme = encore_entry_exists('themes/' ~ branding.theme) ? branding.theme : branding.defaultTheme %}
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+        <link rel="shortcut icon" href="{{ asset('build/themes/'~ theme ~'/favicon.ico') }}">
+        <title>{% block title %}Dashboard{% endblock %} | {{ branding.owner }}</title>
+        {{ encore_entry_link_tags('themes/shared') }}
+        {{ encore_entry_link_tags('themes/' ~ theme) }}
+        {{ encore_entry_link_tags('app') }}
+        {% block stylesheets %}{% endblock %}
+        {{ include('_frontend_vars.html.twig') }}
+        <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ google_maps_api_token }}"></script>
+        {{ encore_entry_script_tags('themes/shared') }}
+        {{ encore_entry_script_tags('themes/' ~ theme) }}
+        {{ encore_entry_script_tags('app') }}
+        {% block javascripts %}{% endblock %}
+    </head>
+    <body>
+        <main class="main" id="top">
+            {% block body %}{% endblock %}
+        </main>
+        {% if app_version %}
+            <footer class="footer text-center">
+                <p class="text-500" style="font-size: xx-small">Version: {{ app_version }}</p>
+            </footer>
+        {% endif %}
+        <div id="toast-container"></div>
+    </body>
+</html>

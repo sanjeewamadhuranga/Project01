@@ -1,0 +1,6 @@
+{% extends 'common/createUpdate.html.twig' %}
+
+{% set title, subTitle = 'configuration.settings.title'|trans, 'manage_features.features'|trans  %}
+
+{% set backUrl = path('configuration_index') %}
+{% block back_url %}{{ backUrl }}{% endblock %}

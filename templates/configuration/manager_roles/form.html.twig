@@ -1,0 +1,74 @@
+{% extends 'common/createUpdate.html.twig' %}
+
+{% set title, subTitle = 'manager_role.addNew'|trans({},'messages'), 'manager_role.detail'|trans({},'messages') %}
+
+{% block back_url %}{{ path('configuration_manager_roles_index') }}{% endblock %}
+
+{% trans_default_domain 'permissions' %}
+
+{% form_theme form _self %}
+
+{% macro action_label(action) %}
+    {% set colors = {
+        '*': 'dark',
+        'view': 'info',
+        'edit': 'warning',
+        'delete': 'danger',
+        'create': 'success'
+    } %}
+    <span class="badge badge-soft-{{ colors[action]|default('primary') }} rounded-pill">{{ ('action.' ~ action)|trans }}</span>
+{% endmacro %}
+
+{% block permissions_widget %}
+    {{ form_errors(form.parent) }}
+    <div class="accordion">
+    {% for header,permissions in groupedPermissions %}
+        {% set headerId = header|replace({'*': 'fullAccess'}) %}
+        <div class="accordion-item">
+            <h2 class="accordion-header"
+                id="{{ form.vars.id }}_heading-{{ headerId }}"
+            >
+                <button
+                    class="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#{{ form.vars.id }}_collapse-{{ headerId }}"
+                    aria-expanded="true"
+                    aria-controls="{{ form.vars.id }}_collapse-{{ headerId }}"
+                >
+                    {{ 'category.%s.header'|format(header)|trans }}
+                </button>
+            </h2>
+            <div class="accordion-collapse collapse show" id="{{ form.vars.id }}_collapse-{{ headerId }}">
+                <div class="accordion-body">
+                    {% for permission in permissions %}
+                        {% set parts = permission|split('.') %}
+                        {% set disabled = (form.vars.choices|filter(choice => choice.value == permission)|first).attr.disabled %}
+                        <div>
+                            <input
+                                type="checkbox"
+                                id="{{ form.vars.id }}_{{ permission }}"
+                                name="{{ form.vars.full_name }}[]"
+                                value="{{ permission }}"
+                                {{ permission in form.vars.value ? 'checked' : '' }}
+                                {{ disabled ? 'readonly="true" onclick="return false;"' : null }}
+                            >
+                            <label class="form-check-label {{ disabled ? 'text-muted' : null }}" for="{{ form.vars.id }}_{{ permission }}">
+                                {% if permission == '*' %}
+                                    <span class="badge badge-soft-dark rounded-pill">{{ 'category.*.fullAccess'|trans }}</span>
+                                {% else %}
+                                    {% if (parts|length) > 2 %}
+                                       {{ ('category.' ~ parts|slice(0, -1)|join('.'))|trans }} {{ _self.action_label(parts|last) }}
+                                    {% else %}
+                                        {{ _self.action_label(parts|last) }}
+                                    {% endif %}
+                                {% endif %}
+                            </label>
+                        </div>
+                    {% endfor%}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

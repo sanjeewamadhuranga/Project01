@@ -1,0 +1,29 @@
+<script>
+    window.SENTRY_DSN = {{ sentry.client.options.dsn.__toString|default|json_encode|raw }};
+    window.APP_SETTINGS = {{
+    {
+        systemLocale: config.settings.SYSTEM_LOCALE|default(app.request.locale),
+        userLocale: app.request.locale,
+        layout: {
+            condensed: app.user.condensedLayout|default(false),
+            fluid: app.user.fluidLayout|default(false),
+        },
+        currencies: config.settings.enabledCurrencies|default({GBP: 'GBP'})|keys,
+        defaultCurrency: config.settings.defaultCurrency|default('GBP'),
+        user: app.user.email|default,
+        permissions: app.user.permissions|default,
+        timezone: config.settings.MANAGER_PORTAL_TIMEZONE|default('Europe/London'),
+        branding: { owner: branding.owner, theme: branding.theme },
+        dashboard: config.settings.DASHBOARD|default,
+        features: config.features.enabledFeatures,
+        version: app_version|default('dev'),
+        environment: app_environment
+    }|json_encode|raw
+    }};
+    {#
+    Following line injects routing information to each HTML response to feed frontend Router with data.
+    This only happens on dev, because prod uses statically generated JSON file for that to reduce response size.
+    See assets/services/routing.ts file for reference.
+    #}
+    {% if app.debug %}window.APP_ROUTES = {{ render(path('fos_js_routing_js'))|raw }};{% endif %}
+</script>

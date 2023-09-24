@@ -1,0 +1,10 @@
+{% extends 'common/base.html.twig' %}
+{% import '/common/macros/macros.html.twig' as commonMacros %}
+{% block title %}{{ item }}{% endblock %}
+
+{% block back_url %}{{ path('configuration_providers_index') }}{% endblock %}
+
+{% set title , subTitle  = 'config_provider.title'|trans(), 'discount_code.subTitle'|trans() %}
+
+{# @var item \App\Domain\Document\Provider\Provider #}
+

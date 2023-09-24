@@ -1,0 +1,66 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "http://localhost:8080/build/runtime.js",
+        "http://localhost:8080/build/vendors-node_modules_webpack-dev-server_client_index_js_protocol_ws_3A_username_password_host-71593a.js",
+        "http://localhost:8080/build/vendors-node_modules_pay_falcon-theme_src_js_utils_js-node_modules_popperjs_core_lib_cr-d332c5.js",
+        "http://localhost:8080/build/vendors-node_modules_fortawesome_react-fontawesome_index_es_js-node_modules_sentry_react_esm_-ad422d.js",
+        "http://localhost:8080/build/app.js"
+      ],
+      "css": [
+        "http://localhost:8080/build/vendors-node_modules_fortawesome_react-fontawesome_index_es_js-node_modules_sentry_react_esm_-ad422d.css",
+        "http://localhost:8080/build/app.css"
+      ]
+    },
+    "themes/shared": {
+      "js": [
+        "http://localhost:8080/build/runtime.js",
+        "http://localhost:8080/build/vendors-node_modules_webpack-dev-server_client_index_js_protocol_ws_3A_username_password_host-71593a.js",
+        "http://localhost:8080/build/vendors-node_modules_pay_falcon-theme_src_js_utils_js-node_modules_popperjs_core_lib_cr-d332c5.js",
+        "http://localhost:8080/build/vendors-node_modules_pay_falcon-theme_src_js_copy-link_js-node_modules_pay_falcon-0f4dd4.js",
+        "http://localhost:8080/build/themes/shared.js"
+      ],
+      "css": [
+        "http://localhost:8080/build/vendors-node_modules_pay_falcon-theme_src_js_copy-link_js-node_modules_pay_falcon-0f4dd4.css",
+        "http://localhost:8080/build/themes/shared.css"
+      ]
+    },
+    "themes/bankofmaldives": {
+      "js": [
+        "http://localhost:8080/build/runtime.js",
+        "http://localhost:8080/build/vendors-node_modules_webpack-dev-server_client_index_js_protocol_ws_3A_username_password_host-71593a.js"
+      ],
+      "css": [
+        "http://localhost:8080/build/themes/bankofmaldives.css"
+      ]
+    },
+    "themes/dialog": {
+      "js": [
+        "http://localhost:8080/build/runtime.js",
+        "http://localhost:8080/build/vendors-node_modules_webpack-dev-server_client_index_js_protocol_ws_3A_username_password_host-71593a.js"
+      ],
+      "css": [
+        "http://localhost:8080/build/themes/dialog.css"
+      ]
+    },
+    "themes/hdbank": {
+      "js": [
+        "http://localhost:8080/build/runtime.js",
+        "http://localhost:8080/build/vendors-node_modules_webpack-dev-server_client_index_js_protocol_ws_3A_username_password_host-71593a.js"
+      ],
+      "css": [
+        "http://localhost:8080/build/themes/hdbank.css"
+      ]
+    },
+    "themes/pay": {
+      "js": [
+        "http://localhost:8080/build/runtime.js",
+        "http://localhost:8080/build/vendors-node_modules_webpack-dev-server_client_index_js_protocol_ws_3A_username_password_host-71593a.js"
+      ],
+      "css": [
+        "http://localhost:8080/build/themes/pay.css"
+      ]
+    }
+  }
+}

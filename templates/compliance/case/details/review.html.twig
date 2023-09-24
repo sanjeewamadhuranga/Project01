@@ -1,0 +1,132 @@
+{{ form_start(reviewForm) }}
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h5 class="mb-0">
+                        {{ 'compliance.case.title.your_actions'|trans }}
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body bg-light">
+            <div class="row">
+                <div class="col-lg">
+                    {{ form_row(reviewForm.caseFlow.reviewComments) }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-lg">
+                    {{ form_row(reviewForm.caseFlow.suggestedAction) }}
+                </div>
+                <div class="col-lg">
+                    {{ form_row(reviewForm.caseFlow.merchantFundsAction) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    {{ form_row(reviewForm.muteNewFlagsCheck) }}
+                </div>
+            </div>
+            <div class="row" id="ignoreDateContainer">
+                <div class="col-lg">
+                    {{ form_row(reviewForm.ignoreDate) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h5 class="mb-0">
+                        {{ 'compliance.case.title.submit_case_for_approval'|trans }}
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body bg-light">
+            <div class="row mb-3">
+                <div class="col-lg">
+                    <span class="text-650">{{ 'compliance.case.text.submit_for_approval'|trans }}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg">
+                    {{ form_row(reviewForm.caseFlow.finaliseReview) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg">
+                    {{ app.user.email }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg">
+                    {{ "now"|date("d M Y") }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg">
+                    {{ form_row(reviewForm.caseFlow.submitForApproval) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="submitReviewModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ 'compliance.case.title.submit_for_approval'|trans }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-lg">
+                            <span class="">{{ 'compliance.case.text.submit_for_approval_modal'|trans }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg">
+                            {{ form_row(reviewForm.assignTo) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg">
+                            {{ form_row(reviewForm.approver) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer text-end">
+                    {{ form_row(reviewForm.submit) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{{ form_end(reviewForm) }}
+
+<script>
+    const selectElement = document.getElementById("case_review_approver");
+    selectElement.setAttribute('disabled', 'disabled');
+    selectElement.selectedIndex = 0;
+    function approverToggle() {
+        let result = document.querySelector('input[name="case_review[assignTo]"]:checked').value;
+        if ("assign_to_user" === result) {
+            selectElement.disabled = false;
+        }
+        if("unassigned" === result){
+            selectElement.setAttribute('disabled', 'disabled');
+            selectElement.selectedIndex = 0;
+        }
+    }
+
+    let muteNewFlagsElement = document.querySelector('input[id="case_review_muteNewFlagsCheck"]');
+    const ignoreDateElement = document.getElementById("ignoreDateContainer");
+    muteNewFlagsElement.checked = (null !== ignoreDateElement.value);
+    function muteNewFlagsToggle() {
+        ignoreDateElement.style.display = (true === muteNewFlagsElement.checked) ? '' : 'none';
+    }
+</script>

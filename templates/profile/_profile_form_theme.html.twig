@@ -1,0 +1,46 @@
+{% block _user_profile_layout_condensedLayout_row %}
+    <h6 class="mb-3 fw-semi-bold">{{ label|trans }}</h6>
+    {{ form_widget(form, {attr: {class: 'd-flex'}}) }}
+{% endblock %}
+
+{% block _user_profile_layout_condensedLayout_entry_widget %}
+    <div class="d-flex align-items-start" style="width: 120px;">
+        <input style="margin-top: 0.125em;"
+            {{ block('widget_attributes') }}
+               value="{{ value }}"
+            {% if checked %}checked="checked"{% endif %}
+               type="radio"
+               class="form-check-input"
+        />
+        <div class="d-flex flex-column align-items-start mx-1">
+            <label{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %} for="{{ id }}">
+                {{ label|trans }}
+            </label>
+            <img src="{{ asset('build/themes/shared/img/' ~ (value ? 'compact' : 'comfortable') ~'.png') }}" alt="{{ label|trans }}"  />
+        </div>
+    </div>
+{% endblock %}
+
+{% block _user_profile_layout_fluidLayout_row %}
+<h6 class="mt-4 fw-semi-bold">{{ label|trans }}</h6>
+{{ form_widget(form, {attr: {class: 'd-flex'}}) }}
+{% endblock %}
+
+{% block _user_profile_layout_fluidLayout_entry_widget %}
+    <div class="d-flex align-items-start" style="width: 120px;">
+        <input style="margin-top: 0.125em;"
+            {{ block('widget_attributes') }}
+               value="{{ value }}"
+            {% if checked %}checked="checked"{% endif %}
+               type="radio"
+               class="form-check-input"
+        />
+        <div class="d-flex flex-column align-items-start mx-1">
+            <label{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %} for="{{ id }}">
+                {{ label|trans }}
+            </label>
+            <img src="{{ asset('build/themes/shared/img/' ~ (value ? 'compact' : 'comfortable') ~'.png') }}" alt="{{ label|trans }}"  />
+        </div>
+    </div>
+{% endblock %}
+

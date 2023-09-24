@@ -1,0 +1,96 @@
+{% extends 'common/base.html.twig' %}
+
+{% block title %} {{ item.code }} {% endblock %}
+
+{% block back_url %}{{ path('compliance_risk_profile_index') }}{% endblock %}
+
+{% set title , subTitle  = 'menu.risk_profiles'|trans(), item.code %}
+
+{# @var item \App\Domain\Document\Compliance\RiskProfile #}
+
+{% block paragraph %}
+    <div class="card-body bg-light border-top border-bottom">
+        <div class="row mb-2">
+            <div class="col-6 col-sm-4">
+                {{ 'compliance.risk_profiles.label.code'|trans }}
+            </div>
+            <div class="col">
+                {{ item.code }}
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-6 col-sm-4">
+                {{ 'currency_fx.label.currency'|trans }}
+            </div>
+            <div class="col">
+                {{ item.currency }}
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-6 col-sm-4">
+                {{ 'compliance.risk_profiles.daily_amount'|trans }}
+            </div>
+            <div class="col">
+                {{ (item.dailyAmount / 100) | format_currency(item.currency) }}
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-6 col-sm-4">
+                {{ 'compliance.risk_profiles.weekly_amount'|trans }}
+            </div>
+            <div class="col">
+                {{ (item.weeklyAmount / 100) | format_currency(item.currency) }}
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-6 col-sm-4">
+                {{ 'compliance.risk_profiles.monthly_amount'|trans }}
+            </div>
+            <div class="col">
+                {{ (item.monthlyAmount / 100) | format_currency(item.currency) }}
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-6 col-sm-4">
+                {{ 'compliance.risk_profiles.single_transaction_amount'|trans }}
+            </div>
+            <div class="col">
+                {{ (item.singleTransactionAmount / 100) | format_currency(item.currency) }}
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-6 col-sm-4">
+                {{ 'compliance.risk_profiles.duplicate_amount'|trans }}
+            </div>
+            <div class="col">
+                {{ item.duplicateAmount }} {{ 'compliance.risk_profiles.in_timeframe'|trans }} {{ item.duplicateAmountTimeFrame }}
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-6 col-sm-4">
+                {{ 'compliance.risk_profiles.number_of_confirmed_transactions'|trans }}
+            </div>
+            <div class="col">
+                {{ item.numberOfConfirmedTransactions }} {{ 'compliance.risk_profiles.in_timeframe'|trans }} {{ item.numberOfConfirmedTransactionsTimeFrame }}
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-6 col-sm-4">
+                {{ 'compliance.risk_profiles.time_of_day_restrictions'|trans }}
+            </div>
+            <div class="col">
+                {{ 'compliance.risk_profiles.from'|trans }} {{ item.allowedTimeIntervalStart }} {{ 'compliance.risk_profiles.to'|trans }} {{ item.allowedTimeIntervalEnd }}
+            </div>
+        </div>
+
+    </div>
+    <div class="card-footer p-4"></div>
+{% endblock %}

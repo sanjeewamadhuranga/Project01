@@ -1,0 +1,20 @@
+<nav class="navbar navbar-light navbar-vertical navbar-expand-xl" style="z-index: 10;">
+    <div class="d-flex align-items-center">
+        <div class="toggle-icon-wrapper">
+
+            <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
+
+        </div>
+        <a class="navbar-brand" href="{{ path('dashboard') }}">
+            <div class="d-flex align-items-center py-3">
+                <img class="me-2" src="{{ asset('build/themes/'~ theme ~'/logo.svg') }}" alt="{{ branding.owner }}" height="40">
+            </div>
+        </a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
+        <div class="navbar-vertical-content scrollbar">
+            {% include 'menu/menu.html.twig' with {menu: menu('sideMenu')} %}
+        </div>
+    </div>
+</nav>
+

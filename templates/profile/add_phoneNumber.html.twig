@@ -1,0 +1,36 @@
+{% extends 'app.html.twig' %}
+
+{% block content %}
+   <div class="card mb-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <h5>
+                        <a href="{{ path('profile_2fa_security') }}" class="btn">
+                            <span class="fas fa-arrow-left"></span>
+                        </a>
+                        {{ 'security.2fa.setupTwoFactorAuth'|trans }}
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="nav nav-pills" role="tablist">
+                        <a class="btn btn-primary">
+                            {{ 'security.2fa.addPhoneNumber'|trans }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body border-1 border-bottom">
+            <h6 class="fw-semi-bold">{{ 'security.2fa.addYourPhoneNumber'|trans }}</h6>
+            <p class="text-650 mb-2 text-16"> {{ 'security.2fa.addPhoneNumberInfo'|trans }} </p>
+        </div>
+    </div>
+{% endblock %}

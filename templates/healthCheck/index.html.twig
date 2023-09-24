@@ -1,0 +1,67 @@
+{% extends 'app.html.twig' %}
+
+{% block title %}
+    {{ 'healthCheck.title'| trans }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+
+        <div class="col-12">
+            <div class="card mb-3">
+                <div class="card-header" style="padding: 1rem 1.5rem;">
+                  <h5>{{ 'healthCheck.title'| trans }}</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card mb-3">
+                <div class="bg-light">
+                    <table class="table mb-0">
+                        <thead>
+                        <tr>
+                            <th scope="col">{{ 'healthCheck.table.checks' | trans }}</th>
+                            <th scope="col">{{ 'healthCheck.table.message'| trans }}</th>
+                            <th scope="col">{{ 'healthCheck.table.status'| trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for result in results %}
+                            {% if result.status == 0 %}
+                                {% set rowClass = 'table-success' %}
+                                {% set divBg = 'bg-success' %}
+                                {% set icon = 'fa-check-circle' %}
+                            {% elseif result.status == 1  %}
+                                {% set rowClass = 'table-warning' %}
+                                {% set divBg = 'bg-warning' %}
+                                {% set icon = 'fa-exclamation-circle' %}
+                            {% elseif result.status == 3 %}
+                                {% set rowClass = 'table-danger' %}
+                                {% set divBg = 'bg-danger' %}
+                                {% set icon = 'fa-times-circle' %}
+                            {% else %}
+                                {% set rowClass = 'table-secondary' %}
+                                {% set divBg = 'bg-warning' %}
+                                {% set icon = 'fa-info-circle' %}
+                            {% endif %}
+
+                            <tr class="{{ rowClass }}">
+                                <td>{{ result.checkName }}</td>
+                                <td>{{ result.message }}</td>
+                                <td>
+                                    <div class="{{ divBg}} me-3 icon-item">
+                                        <span class="fas {{ icon }} text-white fs-3"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

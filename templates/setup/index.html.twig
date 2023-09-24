@@ -1,0 +1,23 @@
+{% extends 'security/base.html.twig' %}
+
+{% block title %}Administrator account setup{% endblock %}
+
+{% block card_content %}
+    <div class="text-start">
+        <h5>Welcome to Manager Portal setup!</h5>
+        <p>This page will help you to create following default roles:</p>
+        <ul>
+            <li>ROLE_SUPER_ADMIN</li>
+            <li>ROLE__ADMIN</li>
+        </ul>
+        <p>Further customization can be done via settings page.</p>
+        <p>
+            Please provide a valid e-mail for root administrator account where you will receive a password reset link.
+        </p>
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_rest(form) }}
+        <button type="submit" class="btn btn-primary btn-block w-100">{{ 'next'|trans }}</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

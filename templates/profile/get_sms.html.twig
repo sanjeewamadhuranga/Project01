@@ -1,0 +1,41 @@
+{% extends 'app.html.twig' %}
+
+{% block content %}
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <h5>
+                        <a href="{{ path('profile_index') }}" class="btn">
+                            <span class="fas fa-arrow-left"></span>
+                        </a>
+                        {{ 'security.2fa.setupTwoFactorAuth'|trans }}
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3 mb-lg-0">
+        <div class="bg-light card-header">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="nav nav-pills" role="tablist">
+                        <a class="btn btn-primary" style="padding:0.125rem 1rem;">
+                            {{ 'security.2fa.tabs.providePhone'|trans }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white card-body">
+            <div class="w-100 w-md-75 w-xl-50">
+                <p class="text-900 fw-semi-bold text-16 mb-2"> {{ 'security.2fa.form.step1sms'|trans }} </p>
+                {{ form_start(form) }}
+                {{ form_rest(form) }}
+                    <button type="submit" style="padding:0.125rem 1rem;" class="btn btn-primary">{{ 'next'|trans }}</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

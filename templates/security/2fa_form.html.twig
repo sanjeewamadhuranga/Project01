@@ -1,0 +1,63 @@
+{% extends 'security/base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block card_content %}
+    <div style="text-align: left">
+        <div class="row flex-between-center mb-2">
+            <div class="col-auto">
+                <h5>{{ 'security.2fa.title' | trans }}</h5>
+            </div>
+        </div>
+
+        <form class="form" action="{{ checkPathUrl ? checkPathUrl: path(checkPathRoute) }}" method="post">
+            <div class="mb-3">
+                <label for="_auth_code">
+                    {% set source = 'google' == twoFactorProvider ? 'security.2fa.authApp'|trans : 'security.2fa.textMessage'|trans %}
+                    {{ 'security.2fa.pleaseEnter'|trans({'%source%': source}) }}
+                </label>
+                <label>
+                    {% if app.user.isSmsAuthenticationEnabled and 'google' == twoFactorProvider and 'sms' in availableTwoFactorProviders %}
+                        <a href="?preferProvider=sms">{{ 'security.2fa.switch2FaToSms'|trans }}</a>
+                    {% endif %}
+                    {% if app.user.isGoogleAuthenticatorEnabled and 'sms' == twoFactorProvider and 'google' in availableTwoFactorProviders %}
+                        <a href="?preferProvider=google">{{ 'security.2fa.switch2FaToApp'|trans }}</a>
+                    {% endif %}
+                </label>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <span class="fas fa-key"></span>
+                    </span>
+                    <input
+                        class="form-control {{ authenticationError ? 'is-invalid' : '' }}"
+                        id="_auth_code"
+                        type="text"
+                        name="{{ authCodeParameterName }}"
+                        autocomplete="one-time-code"
+                        autofocus
+                        pattern="[0-9]*"
+                    />
+                    {% if 'sms' == twoFactorProvider %}
+                        <a class="btn btn-warning" href="{{ path('2fa_resend_sms') }}">Resend SMS</a>
+                    {% endif %}
+                    {% if authenticationError %}
+                        <div class="invalid-feedback">
+                            {{ authenticationError|trans(authenticationErrorData, 'SchebTwoFactorBundle') }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% if displayTrustedOption %}
+                <p class="widget"><label for="_trusted"><input id="_trusted" type="checkbox" name="{{ trustedParameterName }}" /> {{ "trusted"|trans({}, 'SchebTwoFactorBundle') }}</label></p>
+            {% endif %}
+            {% if isCsrfProtectionEnabled %}
+                <input type="hidden" name="{{ csrfParameterName }}" value="{{ csrf_token(csrfTokenId) }}">
+            {% endif %}
+            <input class="btn w-100 btn-primary" type="submit" value="{{ 'confirm' | trans }}" />
+        </form>
+        <p class="cancel pt-2">
+            <a class="btn btn-danger w-100" href="{{ logoutPath }}">{{ "cancel"|trans({}, 'SchebTwoFactorBundle') }}</a>
+        </p>
+    </div>
+
+{% endblock %}

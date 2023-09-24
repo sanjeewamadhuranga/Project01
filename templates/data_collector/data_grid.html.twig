@@ -1,0 +1,51 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% import _self as helper %}
+
+{% block menu %}
+    <span class="label">
+        <span class="icon">{{ include('data_collector/data_grid.svg') }}</span>
+        <strong>Data Grid</strong>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>Data Grid calls</h2>
+
+    {% if collector.calls is empty %}
+    <div class="empty">
+        <p>No calls available.</p>
+    </div>
+    {% else %}
+        {% for call in collector.calls %}
+            <div class="metrics">
+                <div class="metric">
+                    <span class="value">{{ call.dataGrid.type }}</span>
+                    <span class="label">Grid name</span>
+                </div>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th scope="col" class="key">Property</th>
+                    <th scope="col">Value</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">Data Grid</th>
+                    <td>
+                        {{ profiler_dump(call.dataGrid) }}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Request</th>
+                    <td>
+                        {{ call.gridRequest is not null ? profiler_dump(call.gridRequest) : 'none' }}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

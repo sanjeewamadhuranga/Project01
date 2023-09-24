@@ -1,0 +1,32 @@
+{% extends 'app.html.twig' %}
+
+{% block title %}
+    {{ 'config'|trans }}
+{% endblock %}
+
+{% block content %}
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md row">
+                    <h5>{{ 'config_app.header'|trans }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h5>{{ 'config_app.batchImport'|trans }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="card-body bg-light border-top">
+            {{ form(documentForm) }}
+        </div>
+    </div>
+
+    <apps-list source="{{ path('configuration_apps_list') }}" />
+{% endblock %}

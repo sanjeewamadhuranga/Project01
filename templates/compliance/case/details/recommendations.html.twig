@@ -1,0 +1,30 @@
+{% import 'common/macros/macros.html.twig' as macros %}
+
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h5 class="mb-0">
+                    {{ 'compliance.case.title.recommendations'|trans }}
+                </h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body bg-light">
+        <div class="row">
+            <div class="col-lg">
+                {{ macros.detailsRow( 'compliance.case.label.reviewed_by'|trans , item.handler|default(macros.no_data())) }}
+                {{ macros.detailsRow( 'compliance.case.label.reviewed_on'|trans , (item.caseFlow) ? item.caseFlow.createdAt|date : macros.no_data()) }}
+                {{ macros.detailsRow( 'compliance.case.label.review_comments'|trans , item.caseFlow.reviewComments|default(macros.no_data())) }}
+                {{ macros.detailsRow( 'compliance.case.label.action'|trans , item.caseFlow.suggestedAction|default(macros.no_data())) }}
+                {{ macros.detailsRow( 'compliance.case.label.merchant_funds'|trans , item.caseFlow.merchantFundsAction|default(macros.no_data())) }}
+                {% if item.approved is same as(true) %}
+                    {{ macros.detailsRow( 'compliance.case.label.approved_by'|trans , item.approver|default(macros.no_data())) }}
+                    {{ macros.detailsRow( 'compliance.case.label.approved_on'|trans , (item.caseFlow) ? item.caseFlow.updatedAt|date : macros.no_data()) }}
+                    {{ macros.detailsRow( 'compliance.case.label.approval_comments'|trans , item.caseFlow.approveComments|default(macros.no_data())) }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

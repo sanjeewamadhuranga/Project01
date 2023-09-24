@@ -1,0 +1,20 @@
+App\Domain\Document\Role\Role:
+  role (template):
+    createdAt: '<dateTimeThisDecade()>'
+    updatedAt: '$createdAt'
+    deleted: false
+    userAware: false
+    default: true
+    allowedPushNotifications: []
+
+  test_role_1 (extends role):
+    name: 'role_1'
+    description: 'role_1 for tests'
+
+  test_role_2 (extends role):
+    name: 'role_2'
+    description: 'role_2 for tests'
+
+  test_role_3 (extends role):
+    name: 'role_3'
+    description: 'role_3 for tests'

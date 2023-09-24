@@ -1,0 +1,5 @@
+App\Domain\Document\Company\Registration:
+  registration_test:
+    sub: 'test'
+    phoneNumber: 'test'
+    company: '@test_company_1'

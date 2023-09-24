@@ -1,0 +1,87 @@
+{% extends 'common/base.html.twig' %}
+{% import '/common/macros/macros.html.twig' as commonMacros %}
+
+{% block title %} {{ item.name }} {% endblock %}
+{% block back_url %}{{ path('configuration_rules_index') }}{% endblock %}
+
+{# @var item \App\Domain\Document\Rule\Rule #}
+
+{% set subTitle , title = 'config_rules.subTitle'|trans(), 'config_rules.title'|trans() %}
+
+{% block paragraph %}
+    <div class="card-body bg-light border-top">
+        <div class="row mb-3">
+            <div class="col-lg col-xxl-6">
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'config_rules.label.name'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.name | default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'config_rules.label.decision'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.decision.readable|default|trans|default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg col-xxl-6 mb-2">
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'config_rules.label.active'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.active) | default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'config_rules.label.event'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.event.readable|default|trans|default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+            </div>
+
+            {% for restriction in item.restrictions %}
+            <hr/>
+            <div class="col-lg col-xxl-12 mt-1 mb-2">
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'config_rules.restriction.field'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ restriction.field.readable|default|trans|default(commonMacros.no_data())}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'config_rules.restriction.comparison'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ restriction.comparison.readable|default|trans|default(commonMacros.no_data())}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'config_rules.restriction.value'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ restriction.value|default(commonMacros.no_data())}}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

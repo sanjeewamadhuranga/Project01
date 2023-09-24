@@ -1,0 +1,77 @@
+App\Domain\Document\Security\Administrator:
+  admin (template):
+    enabled: true
+    passwordExpiry: null
+    plainPassword: 'test'
+    lastLogin: <(new \DateTime('2021-10-01 15:00:00', new DateTimeZone('UTC')))>
+    __calls:
+      - addManagerPortalRole: ['@ROLE_SUPER_ADMIN']
+      - addManagerPortalRole: ['@ROLE__ADMIN']
+
+  user_ryan (extends admin):
+    email: 'ryan@pay.com'
+
+  user_simon (extends admin):
+    email: 'simon@pay.com'
+
+  user_ion (extends admin):
+    email: 'ion@pay.com'
+
+  user_test (extends admin):
+    email: 'test@pay.com'
+    __calls:
+      - addManagerPortalRole: [ '@ROLE_WHICH_PROTECTS' ]
+
+  user_enabled_2fa (extends admin):
+    email: 'admin1@pay.com'
+    googleAuthenticatorSecret: 'abc123'
+    phoneNumber: '500600700'
+    isSmsAuthenticationEnabled: true
+
+  user_disabled (extends admin):
+    email: 'disabled@pay.com'
+    enabled: false
+
+  user_roles_admin:
+    email: 'roles@pay.com'
+    __calls:
+      - addManagerPortalRole: [ '@ROLE_MANAGER_ROLES_ADMIN' ]
+
+  user_creator:
+    email: 'user_creator@pay.com'
+    __calls:
+      - addManagerPortalRole: [ '@ROLE_USER_CREATOR' ]
+
+  user_with_protected_role:
+    email: 'user_with_protected_role@pay.com'
+    __calls:
+      - addManagerPortalRole: [ '@ROLE_WHICH_PROTECTS' ]
+      - addManagerPortalRole: [ '@ROLE_USER_CREATOR' ]
+
+App\Domain\Document\Security\ManagerPortalRole:
+  ROLE_SUPER_ADMIN:
+    name: 'ROLE_SUPER_ADMIN'
+    description: 'Super Admin Role'
+    permissions: ['*']
+  ROLE__ADMIN:
+    name: 'ROLE__ADMIN'
+    description: ' Admin Role'
+    permissions: ['*']
+  ROLE_MANAGER_ROLES_ADMIN:
+    name: 'ROLE_MANAGER_ROLES_ADMIN'
+    description: 'Can manage roles'
+    permissions: ['configuration.manager_roles.*']
+  ROLE_PROTECTED_ROLE:
+    name: 'ROLE_PROTECTED_ROLE'
+    description: 'Role protected by ROLE_WHICH_PROTECTS'
+    permissions: ['configuration.manager_roles.*']
+    __calls:
+      - setProtectedByRole: [ '@ROLE_WHICH_PROTECTS' ]
+  ROLE_WHICH_PROTECTS:
+    name: 'ROLE_WHICH_PROTECTS'
+    description: 'Role which protects ROLE_PROTECTED_ROLE'
+    permissions: ['configuration.manager_roles.*']
+  ROLE_USER_CREATOR:
+    name: 'ROLE_USER_CREATOR'
+    description: 'Can create users, but without admin permissions'
+    permissions: ['administrators.*']

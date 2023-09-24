@@ -1,0 +1,214 @@
+{% extends 'app.html.twig' %}
+{% import 'common/macros/macros.html.twig' as macros %}
+
+{% block title %}
+    {{ item.company.tradingName }} - {{ 'compliance.dispute.show.title' | trans  }}
+{% endblock %}
+
+{# @var item App\Domain\Document\Compliance\Dispute #}
+
+{% block content %}
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <h5>
+                        <a href="{{ path('compliance_dispute_index') }}" class="btn">
+                            <span class="fas fa-arrow-left"></span>
+                        </a>
+                        {{ 'compliance.dispute.show.title' | trans  }}
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md row">
+                    <h5>{{ item.company.tradingName }} - {{ (item.transaction.amount/100)|format_currency(item.transaction.currency) }}</h5>
+                </div>
+                <div class="col-auto">
+                    {% if item.mutable %}
+                        {{ form(closeDisputeForm) }}
+                    {% else %}
+                        {{ 'compliance.dispute.show.dispute_close_on' | trans }} {{ item.updatedAt|date }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body bg-light border-top">
+            <div class="row mb-3">
+                <div class="col-lg col-xxl-12">
+                    <div class="row">
+                        <div class="col-6 col-sm-5">
+                            <p class="fw-semi-bold text-950 mb-1">
+                                {{ 'compliance.dispute.show.state'|trans}}
+                            </p>
+                        </div>
+                        <div class="col text-650">
+                            <span class="badge-soft-{{ item.state.className }} badge rounded-pill">{{ item.state.value|trans }}</span>
+                        </div>
+                    </div>
+
+                    {{ macros.detailsRow('compliance.dispute.show.dispute_created_on'|trans, item.createdAt|date| default(macros.no_data())) }}
+                    {{ macros.detailsRow('compliance.dispute.show.case_handler'|trans, item.handler| default(macros.no_data()), path('administrators_show', {'id': item.handler.id})) }}
+                    {{ macros.detailsRow('compliance.dispute.show.reason'|trans, item.reason.value | default(macros.no_data())) }}
+                    {{ macros.detailsRow('compliance.dispute.show.comments'|trans ,item.comments|default(macros.no_data())) }}
+                    {{ macros.detailsRow('compliance.dispute.show.merchant'| trans, item.company.tradingName, path('merchants_overview', {'id': item.company.id})) }}
+                    <div class="row">
+                        <div class="col-6 col-sm-5">
+                            <p class="fw-semi-bold text-950 mb-1">
+                               {{ 'compliance.dispute.show.original_transaction' | trans }}
+                            </p>
+                        </div>
+                        <div class="col text-650">
+                           <a href="{{ path('transaction_show', {'id': item.transaction.id}) }}">
+                               {{ (item.transaction.amount/100)|format_currency(item.transaction.currency) }} {{ macros.transactionStatusPill(item.transaction) }}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 col-sm-5">
+                            <p class="fw-semi-bold text-950 mb-1">
+                                {{ 'compliance.dispute.show.transaction_balance'| trans }}
+                            </p>
+                        </div>
+                        <div class="col text-650">
+                              <a href="{{ path('transaction_show', {'id': item.transaction.id}) }}">
+                                        {{ (item.transaction.availableBalance/100) |format_currency(item.transaction.currency) }}
+                              </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 col-sm-5">
+                            <p class="fw-semi-bold text-950 mb-1">
+                                {{ 'compliance.dispute.show.charge_back'| trans }}
+                            </p>
+                        </div>
+                        <div class="col text-650">
+                            {% if item.chargeback %}
+                                <a href="{{ path('transaction_show', {'id': item.chargeback.id}) }}">
+                                        {{ (item.chargeback.amount/100)|format_currency(item.chargeback.currency) }} {{ macros.transactionStatusPill(item.chargeback) }}
+                                </a>
+                             {% else %}
+                                 {% if item.mutable %}
+                                     <a type="submit"  class="btn btn-falcon-default btn-sm mb-2 btn" href="{{ path('compliance_dispute_create_chargeback', {'id': item.id}) }}">
+                                         {{ 'compliance.dispute.show.create_chargeback' | trans }}
+                                     </a>
+                                 {% else %}
+                                     {{ 'compliance.dispute.show.dispute_close_on' | trans }} {{ item.updatedAt|date }}
+                                 {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {{ macros.detailsRow('compliance.dispute.show.dispute_handling_fee'| trans, (item.disputeFee/100) | format_currency(item.transaction.currency) | default(macros.no_data()))}}
+
+                    <div class="row">
+                        <div class="col-6 col-sm-5">
+                            <p class="fw-semi-bold text-950 mb-1">
+                                {{ 'compliance.dispute.show.recomfirmation_transaction'|trans }}
+                            </p>
+                        </div>
+                        <div class="col text-650">
+                            {% if item.reconfirmation %}
+                                <a href="{{ path('transaction_show', {'id': item.reconfirmation.id}) }}">
+                                    {{ (item.reconfirmation.amount/100)|format_currency(item.reconfirmation.currency) }} {{ macros.transactionStatusPill(item.reconfirmation) }}
+                                </a>
+                            {% else %}
+                                {% if item.canCreateReconfirmation() %}
+                                    <a type="submit"  class="btn btn-falcon-default btn-sm mb-2 btn" href="{{ path('compliance_dispute_create_reconfirmation', {'id': item.id }) }}">
+                                        {{ 'compliance.dispute.show.create_reconfirmation'|trans }}
+                                    </a>
+                                {% else %}
+                                    {{  macros.no_data() }}
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 col-sm-5">
+                            <p class="fw-semi-bold text-950 mb-1">
+                                {{ 'compliance.dispute.show.original_attachment'|trans }}
+                            </p>
+                        </div>
+                        <div class="col text-650">
+                            {% if item.transaction is not null and item.transaction.attachments | length > 0 %}
+                                <ul>
+                                    {% for attachment in item.transaction.attachments %}
+                                       <li><a href="{{ path('transaction_download_attachment', {'id': item.transaction.id, 'filename': item.transaction.filename}) }}">{{ attachment.filename }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                {{  macros.no_data() }}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 col-sm-5">
+                            <p class="fw-semi-bold text-950 mb-1">
+                                {{ 'compliance.dispute.show.charge_back_attachment'|trans }}
+                            </p>
+                        </div>
+                        <div class="col text-650">
+                            {% if item.chargeback is not null and item.chargeback.attachments | length > 0 %}
+                                <ul>
+                                    {% for attachment in item.chargeback.attachments %}
+                                        <li><a href="{{ path('transaction_download_attachment', {'id': item.chargeback.id, 'filename': item.chargeback.filename}) }}">{{ attachment.filename }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                {{  macros.no_data() }}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 col-sm-5">
+                            <p class="fw-semi-bold text-950 mb-1">
+                                {{ 'compliance.dispute.show.reconfirmation_attachment'|trans }}
+                            </p>
+                        </div>
+                        <div class="col text-650">
+                            {% if item.reconfirmation is not null and item.reconfirmation.attachments | length > 0   %}
+                                <ul>
+                                    {% for attachment in item.reconfirmation.attachments %}
+                                        <li><a href="{{ path('transaction_download_attachment', {'id': item.reconfirmation.id, 'filename': item.reconfirmation.filename}) }}">{{ attachment.filename }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                {{  macros.no_data() }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h5 class="mb-0">{{ 'compliance.dispute.show.note' | trans }}</h5>
+                </div>
+                <div class="col-auto text-center pe-card">
+                    <a type="submit"  class="btn btn-falcon-default btn-sm mb-2 btn" href="{{ path('compliance_dispute_create_note', {'id': item.id}) }}">
+                        {{ 'compliance.dispute.show.create_notes' | trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body bg-light p-0">
+            <dispute-note-list disputeId="{{ item.id }}" />
+        </div>
+    </div>
+
+
+{% endblock %}

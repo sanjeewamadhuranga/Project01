@@ -1,0 +1,8 @@
+framework:
+    mailer:
+        dsn: '%env(MAILER_DSN)%'
+
+when@prod:
+    framework:
+        mailer:
+            dsn: 'smtp://%env(MAILJET_API_KEY)%:%env(MAILJET_SECRET_KEY)%@in-v3.mailjet.com:465'

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ status_text }}{% endblock %}
+{% block body %}
+    <div class="container" data-layout="container">
+        <div class="row flex-center min-vh-100 py-6 text-center">
+            <div class="col-sm-10 col-md-8 col-lg-6 col-xxl-5">
+                <a class="d-flex flex-center mb-4" href="{{ path('dashboard') }}">
+                    <img class="me-2" src="{{ asset('build/themes/'~ theme ~'/logo.svg') }}" alt="{{ branding.owner }}" height="100">
+                </a>
+                <div class="card">
+                    <div class="card-body p-4 p-sm-5">
+                        <div class="fw-black lh-1 text-300 fs-error">
+                            {% block error_code %}{{ status_code }}{% endblock %}
+                        </div>
+                        <p class="lead text-800 font-sans-serif fw-semi-bold">
+                            {% block error_message %}{{ status_text }}{% endblock %}
+                        </p>
+                        {% if sentry.lastEventId %}
+                            <p class="lead text-650 font-sans-serif">
+                                Event ID: {{ sentry.lastEventId }}
+                            </p>
+                        {% endif %}
+                        <hr>
+                        <p>
+                            {% block help %}Try refreshing the page, or going back and attempting the action again. If this problem persists, contact the administrator.{% endblock %}
+                        </p>
+                        {% if sentry.lastEventId %}
+                            <button class="btn btn-primary btn-sm mt-3" onclick="showFeedbackDialog('{{ sentry.lastEventId }}')">
+                                <span class="fas fa-bug me-2"></span> Report
+                            </button>
+                        {% endif %}
+                        <a class="btn btn-primary btn-sm mt-3" href="/"><span class="fas fa-home me-2"></span> Take me home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

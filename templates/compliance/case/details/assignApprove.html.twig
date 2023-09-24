@@ -1,0 +1,58 @@
+{{ form_start(assignApproveForm) }}
+<div class="card mb-3">
+    <div class="card-body bg-light">
+        <div class="row">
+            <div class="col-lg">
+                {{ form_row(assignApproveForm.assignButton, { 'label': 'compliance.case.label.assign_approve'|trans }) }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="assignModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ 'compliance.case.title.assign_approve'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-lg">
+                        <span class="">{{ 'compliance.case.text.assign_approve'|trans }}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg">
+                        {{ form_row(assignApproveForm.assignTo) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg">
+                        {{ form_row(assignApproveForm.approver) }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-end">
+                {{ form_row(assignApproveForm._token) }}
+                {{ form_row(assignApproveForm.assignSubmit, { 'label': 'compliance.case.label.assign_case'|trans }) }}
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_end(assignApproveForm, {'render_rest': false}) }}
+
+<script>
+    const selectElement = document.getElementById("case_assign_approver");
+    selectElement.setAttribute('disabled', 'disabled');
+    selectElement.selectedIndex = 0;
+    function assignerToggle() {
+        let result = document.querySelector('input[name="case_assign[assignTo]"]:checked').value;
+        if (result === "user") {
+            selectElement.disabled = false;
+        }
+        if(result === "self"){
+            selectElement.setAttribute('disabled', 'disabled');
+            selectElement.selectedIndex = 0;
+        }
+    }
+</script>

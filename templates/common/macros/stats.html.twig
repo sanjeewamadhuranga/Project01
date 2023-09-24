@@ -1,0 +1,22 @@
+{%- macro trend_diff(currentValue, previousValue) -%}
+    {% set percentage = ((currentValue-previousValue)/(previousValue == 0 ? 1 : previousValue)*100)|round(2) %}
+    <span class="badge badge-soft-{{ _self.trend_color(percentage) }} rounded-pill fs--2">{{ _self.trend_icon(percentage) }}{{ percentage|abs }}%</span>
+{% endmacro %}
+
+{%- macro trend_color(percentage) -%}
+    {%- if percentage > 0 -%}
+    success
+    {%- elseif percentage < 0 -%}
+    danger
+    {%- else -%}
+    primary
+    {%- endif -%}
+{%- endmacro -%}
+
+{%- macro trend_icon(percentage) -%}
+    {%- if percentage > 0 -%}
+    <span class="fas fa-caret-up me-1"></span>
+    {%- elseif percentage < 0 -%}
+    <span class="fas fa-caret-down me-1"></span>
+    {%- endif -%}
+{%- endmacro -%}

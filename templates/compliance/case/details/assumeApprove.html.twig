@@ -1,0 +1,37 @@
+{{ form_start(assumeApproveForm) }}
+<div class="card mb-3">
+    <div class="card-body bg-light">
+        <div class="row">
+            <div class="col-lg">
+                {{ form_row(assumeApproveForm.assignButton, { 'label': 'compliance.case.label.assume_approve'|trans }) }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="assignModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ 'compliance.case.title.assume_approve'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-lg">
+                        <span class="">{{ 'compliance.case.text.assume_approve'|trans }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-end">
+                <div class="mb-3">
+                    <button type="button" class="btn btn-dark me-1 mb-1 float-end btn" data-bs-dismiss="modal" aria-label="Close">
+                        {{ 'compliance.case.label.assume_no'|trans }}
+                    </button>
+                </div>
+                {{ form_row(assumeApproveForm._token) }}
+                {{ form_row(assumeApproveForm.assignSubmit, { 'label': 'compliance.case.label.assume_yes'|trans }) }}
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_end(assumeApproveForm, {'render_rest': false}) }}

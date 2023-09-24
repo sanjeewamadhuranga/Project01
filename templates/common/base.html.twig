@@ -1,0 +1,47 @@
+{% extends 'app.html.twig' %}
+
+{% block title %}{{ title|trans }}{% endblock %}
+
+{% block content %}
+    <div class="card mb-3">
+        <div class="card-header" style="padding:1.25rem 1.5rem;">
+            <div class="row">
+                <div class="col">
+                    <h5 class="mb-0 text-900">
+                        <a
+                            {# default fall back to dashboard #}
+                            href="{% block back_url %}{{ path('dashboard') }}{% endblock %}"
+                            class="btn p-0"
+                        >
+                            <span class="fas fa-arrow-left"></span>
+                        </a>
+                       {{ title|trans }}
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        {% if subTitle|default %}
+        <div class="card-header" style="padding:1.25rem 1.5rem;">
+            <div class="row align-items-center">
+                <div class="col d-flex">
+                    <h5 class="mb-0">
+                        {{ subTitle|trans }}
+                    </h5>
+                    {% block status_badge %}{% endblock %}
+                </div>
+                <div class="col d-flex justify-content-end">
+                    {% block card_header_append %}{% endblock %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {%  block paragraph %} {% endblock %}
+    </div>
+    {%  block paragraph_blocks %} {% endblock %}
+
+    {% block footer %}{% endblock %}
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'common/base.html.twig' %}
+{% import '/common/macros/macros.html.twig' as commonMacros %}
+{% block title %} {{ item.title }} {% endblock %}
+
+{% block back_url %}{{ path('configuration_betafeature_index') }}{% endblock %}
+
+{% set title , subTitle  = 'beta_feature.title'|trans(), 'beta_feature.subTitle'|trans() %}
+
+{# @var item \App\Domain\Document\Addons\BetaFeature #}
+
+{% block paragraph %}
+    <div class="card-body bg-light border-top">
+        <div class="row mb-3">
+                <div class="col-lg col-xxl-12">
+                    <div class="row">
+                        <div class="col-6 col-sm-4">
+                            <p class="fw-semi-bold mb-1">{{ 'beta_feature.label.title'|trans }}</p>
+                        </div>
+                        <div class="col">
+                            {{ item.title | default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 col-sm-4">
+                            <p class="fw-semi-bold mb-1">{{ 'beta_feature.label.code'|trans }}</p>
+                        </div>
+                        <div class="col">
+                            {{ item.code | default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 col-sm-4">
+                            <p class="fw-semi-bold mb-1">{{ 'beta_feature.label.description'|trans }}</p>
+                        </div>
+                        <div class="col">
+                            {{ item.description | default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 col-sm-4">
+                            <p class="fw-semi-bold mb-1">{{ 'beta_feature.label.logoFile'|trans }}</p>
+                        </div>
+                        <div class="col">
+                            {% if item.image is not null %}
+                                <img src="{{ vich_uploader_asset(item) }}" alt="Beta feature image"/>
+                            {% else %}
+                                {{ commonMacros.no_data() }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

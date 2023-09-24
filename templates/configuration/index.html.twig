@@ -1,0 +1,61 @@
+{% extends 'app.html.twig' %}
+
+{% block title %}
+    {{ 'configuration.settings.title'|trans }}
+{% endblock %}
+
+{% block content %}
+    <div class="card mb-3">
+        <div class="card-header bg-light">
+            <span class="page-title mb-0 fs-1">
+                {{ 'configuration.settings.title'|trans }}
+            </span>
+        </div>
+    </div>
+    {% for page in menu('configMenu') %}
+        <div class="card">
+            <div class="card-header">
+                <span class="page-title mb-0 fs-1">{{ page.label|trans }}</span>
+            </div>
+            <div class="card-body bg-light">
+                <div class="row mx-1 mb-1">
+                    {% for subsection in page.children %}
+                        <div class="col-sm-6 col-md-4 m-0 p-0">
+                            <div class="card shadow-none border m-2">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-sm-2 col-md-2 m-0 p-0 text-center">
+                                            <i class="{{ page.icon }}"></i>
+                                        </div>
+                                        <div class="col-sm-10 col-md-10 m-0 p-0 pe-3">
+                                            <div class="page-title">
+                                                {{ (subsection.label ~ '.title')|trans }}
+                                            </div>
+                                            <div class="mt-1" style="color: #5d6e82">
+                                                {{ (subsection.label ~ '.text')|trans }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body bg-light">
+                                    <div class="row">
+                                        <div class="col-sm-2 col-md-2 m-0"></div>
+                                        <div class="col-sm-10 col-md-10 m-0 ms-3 p-0">
+                                            <div class="list-group list-group-flush">
+                                                {% for setting in subsection.children %}
+                                                    <a class="list-group-item list-group-item-action text-13 background-light link-primary" href="{{ path(setting.route) }}">
+                                                        {{ setting.label|trans }}
+                                                    </a>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'common/base.html.twig' %}
+{% import '/common/macros/macros.html.twig' as commonMacros %}
+{% block title %}{{ item }}{% endblock %}
+
+{% block back_url %}{{ path('configuration_discount_code_index') }}{% endblock %}
+
+{% set title , subTitle  = 'discount_code.title'|trans(), 'discount_code.subTitle'|trans() %}
+
+{# @var item \App\Domain\Document\DiscountCode #}
+
+{% block paragraph %}
+    <div class="card-body bg-light border-top">
+        <div class="row mb-3">
+            <div class="col-lg col-xxl-6">
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'discount_code.label.active'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.active) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'discount_code.label.title'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.title|default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'discount_code.label.description'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.description|default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'discount_code.label.code'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.code|default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'discount_code.label.discountPercentage'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.discountPercentage }}%
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'discount_code.label.totalDiscountCallback'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.totalDiscountCallback|default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg col-xxl-6">
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'discount_code.label.validFrom'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.validFrom ? item.validFrom|date : commonMacros.no_data() }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'discount_code.label.validTo'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.validTo ? item.validTo|date : commonMacros.no_data() }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'discount_code.label.daysValid'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        <ul>
+                        {% for day in item.daysValid|sort %}
+                            <li>{{ date('sunday this week')|date_modify("+#{day} days")|date('l') }}</li>
+                        {% else %}
+                            {{ commonMacros.no_data() }}
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

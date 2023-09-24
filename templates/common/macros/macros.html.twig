@@ -1,0 +1,108 @@
+{%- macro no_data( text = 'merchant.company_details.no_info' ) -%}
+    <p class="text-muted mb-1">{{ text | trans }}</p>
+{% endmacro %}
+
+{% macro address(address) %}
+    {{ address }}
+{% endmacro %}
+
+{% macro transactionStatusPill(transaction) %}
+    <span class="badge-soft-{{ transaction.state.className }} badge rounded-pill">{{ transaction.state.readable|trans }}</span>
+{% endmacro %}
+
+{% macro taskStatusPill(task) %}
+    <span class="badge-soft-{{ task.state.className }} badge rounded-pill">{{ task.state.readable|trans }}</span>
+{% endmacro %}
+
+{% macro caseStatusPill(case) %}
+    <span class="badge-soft-{{ case.status.className }} badge rounded-pill">{{ case.status.readable|trans }}</span>
+{% endmacro %}
+
+{% macro logTypeMessage(log) %}
+    {% if log.type == 'administrator.authentication.success' %}
+        <span>{{ 'merchant.company_details.authentication_success' | trans }}</span>
+    {% elseif log.type == 'document.update' %}
+        <span>{{ 'merchant.company_details.update_action' | trans }}</span>
+    {% elseif log.type == 'document.create' %}
+        <span>{{ 'merchant.company_details.create_action' | trans }}</span>
+    {% elseif log.type == 'administrator.authentication.failure' %}
+        <span>{{ 'merchant.company_details.authentication_failure' | trans }}</span>
+    {% else %}
+        <span>Log type not recognized</span>
+    {% endif %}
+{% endmacro %}
+
+{% macro notesNotification(note) %}
+    {% if note.completed %}
+        <span class="fas fa-check text-success"></span>
+    {% else %}
+        <span class="fas far fas fa-exclamation text-danger"></span>
+    {% endif %}
+{% endmacro %}
+
+{% macro nationalIdStatus(nationalId) %}
+    {% set statusClass = nationalId.status == 'verified' ? 'success' : 'danger' %}
+    <span class="badge-soft-{{ statusClass }} badge rounded-pill">{{ nationalId.status|default('-') }}</span>
+{% endmacro %}
+
+{% macro booleanLabel(value, inverse = false) %}
+    {% if value %}
+        <span class="badge-soft-{{ inverse ? 'danger' : 'success' }} badge rounded-pill">{{ 'boolean.yes'|trans }}</span>
+    {% else %}
+        <span class="badge-soft-{{ inverse ? 'success' : 'danger' }} badge rounded-pill">{{ 'boolean.no'|trans }}</span>
+    {% endif %}
+{% endmacro %}
+
+
+{% macro booleanString(value) %}
+    {% if value %}
+        {{ 'boolean.yes'|trans }}
+    {% else %}
+        {{ 'boolean.no'|trans }}
+    {% endif %}
+{% endmacro %}
+
+{% macro companyStatus(company) %}
+    <span class="badge badge-soft-{{ company.status.className }}">
+        {{ company.status.readable|trans }}
+    </span>
+{% endmacro %}
+
+{% macro detailsRow(label, value, url = null, raw = false) %}
+    <div class="row">
+        <div class="col-6 col-sm-5">
+            <p class="fw-semi-bold text-950 mb-1">
+                {{ label|default('') }}
+            </p>
+        </div>
+        <div class="col text-650">
+            {% if url is not null %}
+                <a href="{{ url }}">{{ value }}</a>
+            {% else %}
+                {{ value|default(_self.no_data()) }}
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro rating(currentRating, totalRating = 5) %}
+    {% for i in 1..totalRating %}
+        {% if i <= currentRating %}
+            <span class="fa fa-star text-warning"></span>
+        {% else %}
+            <span class="fa fa-star text-300"></span>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% macro json_highlight(object) %}
+    <pre class="language-json"><code>{{ object|serialize('json',{json_encode_options: constant('JSON_PRETTY_PRINT')}) }}</code></pre>
+{% endmacro %}
+
+{% macro in_array(needle, collection) %}
+    {% if needle in collection %}
+        {{ 'boolean.yes'|trans }}
+    {% else %}
+        {{ 'boolean.no'|trans }}
+    {% endif %}
+{% endmacro %}

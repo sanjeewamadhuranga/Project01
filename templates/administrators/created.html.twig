@@ -1,0 +1,42 @@
+{% extends 'common/base.html.twig' %}
+{% import '/common/macros/macros.html.twig' as macros %}
+
+{% set title, subTitle = user, 'administrators.detail'|trans %}
+
+{% block back_url %}{{ path('administrators_index') }}{% endblock %}
+
+
+{% block paragraph %}
+    <div class="card-body bg-light border-top">
+        <div class="row mb-3">
+            <div class="col-lg col-xxl-6">
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'administrators.label.email'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ user.email }}
+                    </div>
+                </div>
+                {% if config.settings.isPasswordLoginDisabled == false %}
+                    <div class="row">
+                        <div class="col-6 col-sm-4">
+                            <p class="fw-semi-bold mb-1">{{ 'administrators.label.temporaryPassword'|trans }}</p>
+                        </div>
+                        <div class="col">
+                            {{ tempPassword }}
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'administrators.label.accountExpirationDate'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ user.accountExpirationDate ? user.accountExpirationDate|date : macros.no_data() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

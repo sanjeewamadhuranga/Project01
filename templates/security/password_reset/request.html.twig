@@ -1,0 +1,24 @@
+{% extends 'security/base.html.twig' %}
+
+{% block title %}Reset password{% endblock %}
+
+{% block card_content %}
+    {% for label, messages in app.flashes(['warning', 'error', 'success', 'danger']) %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <h5 class="mb-0">Forgot your password?</h5>
+    <small>Enter your email and we'll send you a reset link.</small>
+    <form class="mt-4" method="post">
+        <input class="form-control" type="email" name="email" placeholder="Email address" required>
+        <div class="mb-3">
+            <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Send reset link</button>
+        </div>
+    </form>
+    <a class="fs--1 text-600" href="#!">I can't recover my account using this page<span class="d-inline-block ms-1">→</span></a>
+{% endblock %}

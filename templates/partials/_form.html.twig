@@ -1,0 +1,10 @@
+{% import 'common/macros/macros.html.twig' as macros %}
+
+<form action="{{ action }}" method="post">
+    <input type="hidden" name="_token" value="{{ csrf_token(token) }}"/>
+    {% block submit %}
+        <button type="submit" class="btn btn-sm btn-falcon-default">
+            {{ 'submit'|trans }}
+        </button>
+    {% endblock %}
+</form>

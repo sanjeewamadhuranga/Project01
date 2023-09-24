@@ -1,0 +1,75 @@
+{% extends 'app.html.twig' %}
+
+{% block content %}
+     <div class="card mb-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <h5>
+                        <a href="{{ path('profile_index') }}" class="btn">
+                            <span class="fas fa-arrow-left"></span>
+                        </a>
+                        {{ 'security.2fa.settings'|trans }}
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <h5>
+                        {{ 'security.2fa.twoFactorAuth'|trans }}
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div class="card-body border-1 border-bottom">
+            <h6 class="fw-semi-bold text-900 mb-2 text-16">{{ 'security.2fa.enabledMethod'|trans }}:</h6>
+            {% if app.user.isGoogleAuthenticatorEnabled %}
+                <p class="fw-semi-bold text-900 mb-2 fs--1"> {{ 'security.2fa.authApp'|trans }} </p>
+                <p class="text-600 mb-2 fs--1"> {{ 'security.2fa.authAppInfo'|trans }} </p>
+                <a class="btn btn-falcon-default" href="{{ path('profile_2fa_disable_app') }}">{{ 'security.2fa.disable'|trans }}</a>
+            {% endif %}
+            {% if app.user.smsAuthenticationEnabled %}
+                <p class="fw-semi-bold text-900 mb-2 fs--1"> {{ 'security.2fa.textMessage'|trans }} </p>
+                <p class="text-600 mb-2 fs--1"> {{ 'security.2fa.textMessageInfo'|trans }} </p>
+                <a class="btn btn-falcon-default" href="{{ path('profile_2fa_disable_sms') }}">{{ 'security.2fa.disable'|trans }}</a>
+                <a href="{{path('profile_2fa_get_sms')}}" class="btn btn-falcon-default">{{ 'security.2fa.changePhone'|trans }}</a>
+            {% endif %}
+        </div>
+        <div class="card-body">
+            <h6 class="fw-semi-bold text-900 mb-2 text-16">{{ 'security.2fa.additionalMethods'|trans }}:</h6>
+            {% if not app.user.smsAuthenticationEnabled %}
+                <p class="fw-semi-bold text-900 mb-2 fs--1"> {{ 'security.2fa.textMessage'|trans }} </p>
+                <p class="text-600 mb-2 fs--1"> {{ 'security.2fa.textMessageInfo'|trans }} </p>
+                <a href="{{path('profile_2fa_get_sms')}}" class="btn btn-falcon-default">{{ 'security.2fa.setup'|trans }}</a>
+            {% endif %}
+            {% if not app.user.isGoogleAuthenticatorEnabled %}
+                <p class="fw-semi-bold text-900 mb-2 fs--1"> {{ 'security.2fa.authApp'|trans }} </p>
+                <p class="text-600 mb-2 fs--1"> {{ 'security.2fa.authAppInfo'|trans }} </p>
+                <a href="{{path('profile_2fa_get_app')}}" class="btn btn-falcon-default">{{ 'security.2fa.setup'|trans }}</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <h5>
+                        {{ 'security.2fa.disable2FA'|trans }}
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <p class="text-650 mb-2 text-16"> {{ 'security.2fa.disableInfo'|trans }} </p>
+            <div class="d-flex align-items-center">
+                <a class="btn btn-danger" href="{{ path('profile_2fa_disable') }}">{{ 'security.2fa.disable'|trans }}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

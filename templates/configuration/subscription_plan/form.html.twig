@@ -1,0 +1,55 @@
+{% extends 'common/crud/form.html.twig' %}
+
+{% block form %}
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.userPublic) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.name) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.code) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.description) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.modification) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.supportLevel) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.dccMarkupRate) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.dccMerchantRebateRate) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.pricePerMonth) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.pricePerYear) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.priceCurrency) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.accountLimits) }}
+        </div>
+    </div>
+    {{ form_rest(form) }}
+{% endblock %}

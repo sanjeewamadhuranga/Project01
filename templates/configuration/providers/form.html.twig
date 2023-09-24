@@ -1,0 +1,223 @@
+{% extends 'common/base.html.twig' %}
+
+{% set title, subTitle = item|default('config_provider.addNew'|trans), null %}
+
+{% block back_url %}
+    {{ path('configuration_providers_index') }}
+{% endblock %}
+
+{% block paragraph_blocks %}
+    {{ form_start(form) }}
+    <!-- Provider Status -->
+    <div class="card mb-3">
+        <div class="col">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h5 class="mb-0">
+                            {{ 'config_provider.legend.status' | trans }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body bg-light border-top" style="padding:1.25rem 1.5rem;">
+                <fieldset>
+                    {{ form_row(form.general) }}
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    <!-- Provider Logo & Icon -->
+    <div class="card mb-3">
+        <div class="col">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h5 class="mb-0">
+                            {{  'config_provider.legend.logo&Icons' | trans }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body bg-light border-top" style="padding:1.25rem 1.5rem;">
+                <fieldset>
+                    {{ form_row(form.logos) }}
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    <!-- Provider Presentation -->
+    <div class="card mb-3">
+        <div class="col ">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h5 class="mb-0">
+                            {{ 'config_provider.legend.presentation' | trans }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body bg-light border-top" style="padding:1.25rem 1.5rem;">
+                <fieldset>
+                    {{ form_row(form.presentation) }}
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settlement Configuration -->
+    <div class="card mb-3">
+        <div class="col">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h5 class="mb-0">
+                            {{ 'config_provider.legend.settlementConfig' | trans }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body bg-light border-top" style="padding:1.25rem 1.5rem;">
+                <fieldset>
+                    {{ form_row(form.settlement) }}
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    <!-- Provider Configuration -->
+    <div class="card mb-3">
+        <div class="col ">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h5 class="mb-0">
+                            {{ 'config_provider.legend.configuration' | trans }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body bg-light border-top" style="padding:1.25rem 1.5rem;">
+                <fieldset>
+                    {{ form_row(form.configuration) }}
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Refunds -->
+    <div class="card mb-3">
+        <div class="col ">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h5 class="mb-0">
+                            {{ 'config_provider.legend.refunds' | trans }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body bg-light border-top" style="padding:1.25rem 1.5rem;">
+                <fieldset>
+                    {{ form_row(form.refunds) }}
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    <!-- Provider FX -->
+    <div class="card mb-3">
+        <div class="col ">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h5 class="mb-0">
+                            {{ 'config_provider.legend.fx' | trans }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body bg-light border-top" style="padding:1.25rem 1.5rem;">
+                <fieldset>
+                    {{ form_row(form.fxConfig) }}
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    <!-- Provider Advance Configuration -->
+    <div class="card mb-3">
+        <div class="col ">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h5 class="mb-0">
+                            {{ 'config_provider.legend.advanceConfig' | trans }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body bg-light border-top" style="padding:1.25rem 1.5rem;">
+                <fieldset>
+                    {{ form_row(form.advanceConfig) }}
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Provider Currency Limits -->
+    <div class="card mb-3">
+        <div class="col ">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h5 class="mb-0">
+                            {{ 'config_provider.legend.currencyLimit' | trans }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body bg-light border-top" style="padding:1.25rem 1.5rem;">
+                <fieldset>
+                    {{ form_row(form.currencyLimits) }}
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    <!-- Provider Acquiring -->
+    <div class="card mb-3">
+        <div class="col ">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h5 class="mb-0">
+                            {{ 'config_provider.legend.acquiring' | trans }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body bg-light border-top" style="padding:1.25rem 1.5rem;">
+                <fieldset>
+                    {{ form_row(form.acquiring) }}
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-footer border-top text-end" style="padding:1.25rem 1.5rem;">
+            {# <button type="submit" class="btn btn-primary">{{ 'config_provider.label.createProvider'|trans }}</button> #}
+            <button type="submit" class="btn btn-primary">{{ 'submit'|trans }}</button>
+        </div>
+    </div>
+    {% block form %}
+        {{ form_rest(form) }}
+    {% endblock %}
+    {{ form_end(form) }}
+
+{% endblock %}

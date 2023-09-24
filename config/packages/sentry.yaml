@@ -1,0 +1,21 @@
+sentry:
+    dsn: '%env(SENTRY_DSN)%'
+    options:
+        send_default_pii: true
+        release: '%env(APP_VERSION)%'
+        environment: '%env(APP_ENVIRONMENT)%'
+        integrations:
+            - 'Sentry\Integration\IgnoreErrorsIntegration'
+
+services:
+    Sentry\Integration\IgnoreErrorsIntegration:
+        arguments:
+            $options:
+                ignore_exceptions:
+                    - Symfony\Component\Security\Core\Exception\AccessDeniedException
+                    - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+
+when@test:
+    sentry:
+        options:
+            default_integrations: false # Do not register Sentry error handler in tests

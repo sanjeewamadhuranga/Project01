@@ -1,0 +1,16 @@
+<div class="modal fade" id="confirm-change" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                {{ 'confirmThisAction' | trans }}
+            </div>
+            <div class="modal-body">
+                {{ 'areYouSure' | trans }}?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">{{ 'cancel' | trans }}</button>
+                <a class="btn btn-danger btn-ok" href={{ targetPath }}>{{ 'confirm' | trans }}</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+{% extends 'common/crud/form.html.twig' %}
+
+{% import 'common/macros/macros.html.twig' as macros %}
+
+{% block form %}
+    {{ form_errors(form) }}
+    {% if existingDispute is defined %}
+        <div class="alert alert-danger fade show" role="alert">
+            {{ 'compliance.disputes.message.disputeExistForTransaction'|trans }}
+            <a href="{{ path('compliance_dispute_show', { id: existingDispute.id}) }}" class="btn btn-sm btn-falcon-default btn btn-primary">
+                {{ 'compliance.disputes.label.viewDispute'|trans }}
+            </a>
+        </div>
+    {% endif %}
+    {{ form_row(form.transaction) }}
+    {% if item is defined and item.transaction %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <label class="form-label">{{ 'compliance.disputes.label.information'|trans }}</label>
+                <table class="table table-striped">
+                    <tr>
+                        <th scope="row">{{ 'transaction_view.label.merchant'|trans }}</th>
+                        <td>
+                            <a href="{{ path('merchants_overview', {id: item.transaction.merchant.id}) }}">
+                                {{ item.transaction.merchant.tradingName }}
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ 'transaction_view.label.amount'|trans }}</th>
+                        <td>
+                            <a href="{{ path('transaction_show', {id: item.transaction.id}) }}">
+                                {{ (item.transaction.amount / 100) | format_currency(item.transaction.currency) }}
+                            </a> {{ macros.transactionStatusPill(item.transaction) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ 'transaction_view.label.availableBalance'|trans }}</th>
+                        <td>
+                            <a href="{{ path('transaction_show', {id: item.transaction.id}) }}">
+                                {{ (item.transaction.availableBalance / 100) | format_currency(item.transaction.currency) }}
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'transaction_view.label.confirmedOn'|trans }}</th>
+                        <td>{{ item.transaction.createdAt| date }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+    {{ form_rest(form) }}
+{% endblock %}

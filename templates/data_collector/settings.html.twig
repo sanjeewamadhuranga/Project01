@@ -1,0 +1,98 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% import _self as helper %}
+
+{% block menu %}
+    <span class="label">
+        <span class="icon">{{ include('@WebProfiler/Icon/config.svg') }}</span>
+        <strong>Settings</strong>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>System Settings</h2>
+
+    <div class="metrics">
+        <div class="metric">
+            <span class="value">{{ collector.owner }}</span>
+            <span class="label">Owner</span>
+        </div>
+        <div class="metric">
+            <span class="value">{{ collector.theme }}</span>
+            <span class="label">Theme</span>
+        </div>
+        <div class="metric">
+            <span class="value">{{ collector.settings.BASE_CURRENCY|default('(not set)') }}</span>
+            <span class="label">Base currency</span>
+        </div>
+        <div class="metric">
+            <span class="value">
+                {% if collector.settings.DISABLE_MANAGER_PORTAL_PASSWORD_LOGIN|default('false') == 'true' %}
+                    {{ include('@WebProfiler/Icon/yes.svg') }}
+                {% else %}
+                    {{ include('@WebProfiler/Icon/no.svg') }}
+                {% endif %}
+            </span>
+            <span class="label">Password login disabled</span>
+        </div>
+    </div>
+    <div class="sf-tabs">
+        <div class="tab">
+            <h3 class="tab-title">Enabled Features <span class="badge">{{ collector.features.enabled|length }}</span></h3>
+            <div class="tab-content">
+                <table>
+                    <thead>
+                    <tr>
+                        <th class="key">Name</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for name in collector.features.enabled|merge(collector.features.all)|sort %}
+                        <tr>
+                            <td>{{ name }}</td>
+                            <td>
+                                {% if name in collector.features.enabled|merge([]) %}
+                                    <span class="label status-success">Enabled</span>
+                                {% else %}
+                                    <span class="label status-error">Disabled</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab">
+            <h3 class="tab-title">Settings <span class="badge">{{ collector.settings|length }}</span></h3>
+            <div class="tab-content">
+                {% if collector.settings is empty %}
+                    <div class="empty">
+                        <p>There are no settings set</p>
+                    </div>
+                {% else %}
+                    <table>
+                        <thead>
+                        <tr>
+                            <th class="key">Key</th>
+                            <th>Value</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for name,value in collector.settings|sort %}
+                            <tr>
+                                <td>{{ name }}</td>
+                                <td>
+                                    {{ dump(value) }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

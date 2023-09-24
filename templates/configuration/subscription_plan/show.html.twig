@@ -1,0 +1,244 @@
+{% extends 'common/base.html.twig' %}
+{% import '/common/macros/macros.html.twig' as commonMacros %}
+{% block title %} {{ item }} {% endblock %}
+
+{% block back_url %}{{ path('configuration_subscription_plan_index') }}{% endblock %}
+
+{% set title , subTitle  = 'subscription_plan.header'|trans(), 'subscription_plan.detail'|trans() %}
+
+{# @var item \App\Domain\Document\SubscriptionPlan\SubscriptionPlan #}
+
+{% block paragraph %}
+    <div class="card-body bg-light border-top">
+        <div class="row mb-3">
+                <div class="col-lg-6 col-xxl-6 mb-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.name'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ item.name|default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.code'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ item.code|default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.description'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ item.description|default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.modification'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ item.modification|default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.userPublic'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ commonMacros.booleanLabel(item.userPublic) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.supportLevel'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ item.supportLevel|default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.dccMarkupRate'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ (item.dccMarkupRate / 100)|format_number({max_fraction_digit: 10}, 'percent') }}
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.dccMerchantRebateRate'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ (item.dccMerchantRebateRate / 100)|format_number({max_fraction_digit: 10}, 'percent') }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.pricePerMonth'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ item.pricePerMonth|number_format(2, '.', ',')|default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.pricePerYear'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ item.pricePerYear|number_format(2, '.', ',')|default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.priceCurrency'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ item.priceCurrency|default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-xxl-6">
+                    <h6 class="fw-semi-bold ls mb-3 text-uppercase card-section-header">{{ 'subscription_plan.label.accountLimits'|trans }}</h6>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.limits.numberOfShops'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ item.accountLimits.numberOfShops|default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.limits.numberOfProducts'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ item.accountLimits.numberOfProducts|default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.limits.numberOfIntegrations'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ item.accountLimits.numberOfIntegrations|default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.limits.numberOfUsers'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ item.accountLimits.numberOfUsers|default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.limits.numberOfApps'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ item.accountLimits.numberOfApps|default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.limits.numberOfTerminals'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ item.accountLimits.numberOfTerminals|default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.limits.numberOfConnectedBankAccounts'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ item.accountLimits.numberOfConnectedBankAccounts|default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.limits.payoutOffset'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ item.accountLimits.payoutOffset|default(commonMacros.no_data()) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.instantActivation'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {{ commonMacros.booleanLabel(item.instantActivation) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xxl-6 mt-4">
+                    <h6 class="fw-semi-bold ls mb-3 text-uppercase card-section-header">{{ 'subscription_plan.label.merchantDiscountRates'|trans }}</h6>
+                    <div class="row">
+                        <div class="col-6">
+                            {% if item.merchantDiscountRates %}
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'subscription_plan.label.discountRate.mdr'|trans }}</th>
+                                    <th>{{ 'subscription_plan.label.discountRate.fixedFee'|trans }}</th>
+                                    <th>{{ 'subscription_plan.label.discountRate.rateFee'|trans }}</th>
+                                    <th>{{ 'subscription_plan.label.discountRate.provider'|trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for rate in item.merchantDiscountRates %}
+                                    <tr>
+                                        <td>{{ rate.code }}</td>
+                                        <td>{{ (rate.fixedFee/100)|number_format(2, '.', ',') }}</td>
+                                        <td>{{ (rate.rateFee/100)|number_format(2, '.', ',') }}</td>
+                                        <td>{{ rate.provider }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            {% else %}
+                                {{ commonMacros.no_data() }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xxl-6 mt-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semi-bold mb-1">{{ 'subscription_plan.label.restrictedFeatures'|trans }}</p>
+                        </div>
+                        <div class="col-6">
+                            {% if item.restrictedFeatures %}
+                                <ul>
+                                    {% for feature in item.restrictedFeatures %}
+                                        <li>{{ feature }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                {{ commonMacros.no_data() }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

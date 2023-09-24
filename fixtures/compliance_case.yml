@@ -1,0 +1,31 @@
+App\Domain\Document\Compliance\PayoutBlock:
+  case (template):
+    createdAt: '<dateTimeThisDecade()>'
+    updatedAt: '$createdAt'
+    comments: '<sentence()>'
+    reason: '<(App\Domain\Compliance\PayoutBlockReason::AMOUNT_DAILY)>'
+    company: '@company_*'
+
+  case_open (extends case):
+    reviewed: false
+    approved: false
+    handler: null
+    approver: null
+
+  case_in_review (extends case):
+    reviewed: false
+    approved: false
+    handler: '@user_test'
+    approver: null
+
+  case_in_approval_unassigned (extends case):
+    reviewed: true
+    approved: false
+    handler: '@user_ryan'
+    approver: null
+
+  case_in_approval_assigned (extends case):
+    reviewed: true
+    approved: false
+    handler: '@user_ryan'
+    approver: '@user_test'

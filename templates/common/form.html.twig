@@ -1,0 +1,69 @@
+{% block collection_widget %}
+    <div class="col pt-1">
+        <div class="mb-3">
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    {% if compound %}
+                        {% for fieldPrototype in form.vars.prototype %}
+                            <th>{{ form_label(fieldPrototype) }}</th>
+                        {% endfor %}
+                    {% else %}
+                        <th>{{ form_label(form.vars.prototype) }}</th>
+                    {% endif %}
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody
+                    id="{{ form.vars.id }}_items"
+                    data-prototype="{{ form_row(form.vars.prototype)|spaceless|e('html_attr') }}"
+                    data-index="{{ form|length > 0 ? form|last.vars.name + 1 : 0 }}"
+                >
+                {{ form_widget(form) }}
+                </tbody>
+            </table>
+            {{ block('collection_entry_add_btn') }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block collection_entry_row %}
+    <tr id="{{ form.vars.id }}">
+        {% for field in form|default([form]) %}
+            <td>
+                {{ form_widget(field) }}
+                {{ form_errors(field) }}
+            </td>
+        {% endfor %}
+        <td>
+            {{ block('collection_entry_delete_btn') }}
+        </td>
+    </tr>
+{% endblock %}
+
+{% block collection_entry_delete_btn %}
+    <button
+        type="button"
+        class="btn delete_item_link"
+        title="{{ 'collection.remove'|trans }}"
+        onclick="removeCollectionItem(this)"
+        data-target-item="{{ form.vars.id }}">
+        <i class="fas fa-trash-alt text-danger"></i>
+    </button>
+{% endblock %}
+
+{% block collection_entry_add_btn %}
+    <button
+        type="button"
+        class="btn btn-falcon-default add_item_link mb-3"
+        data-collection-target="{{ form.vars.id }}_items"
+    >{{ 'collection.add'|trans }}</button>
+{% endblock %}
+
+{%- block document_autocomplete_widget -%}
+    <select {{ block('attributes') }}>
+        {%- for value, label in selected -%}
+            <option value="{{ value }}" selected>{{ label }}</option>
+        {%- endfor -%}
+    </select>
+{%- endblock -%}

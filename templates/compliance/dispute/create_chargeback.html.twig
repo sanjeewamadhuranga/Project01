@@ -1,0 +1,51 @@
+{% extends 'common/createUpdate.html.twig' %}
+
+{% set title, subTitle = 'compliance.dispute.show.create_chargeback'|trans, 'compliance.dispute.show.create_chargeback'|trans%}
+
+{% block back_url %}{{ path('compliance_dispute_index') }}{% endblock %}
+
+{% set backUrl = path('compliance_dispute_index') %}
+
+{% block form %}
+    {{ form_errors(form) }}
+    {{ form_start(form) }}
+    <fieldset class="border p-4 mb-4">
+        <legend class="w-auto">{{ 'reports.billing_labels.details'|trans }}</legend>
+        {{ form_row(form.amount) }}
+        {{ form_row(form.currency) }}
+        {{ form_row(form.state) }}
+    </fieldset>
+    <fieldset class="border p-4 mb-4">
+        <legend class="w-auto">{{ 'compliance.disputes.fieldset.billing'|trans }}</legend>
+        {{ form_row(form.provider) }}
+        {{ form_row(form.merchantDiscountRateCode) }}
+    </fieldset>
+    <fieldset class="border p-4 mb-4">
+        <legend class="w-auto">{{ 'compliance.disputes.fieldset.additionalInformation'|trans }}</legend>
+        {{ form_row(form.appId) }}
+        {{ form_row(form.localId) }}
+        {{ form_row(form.customerReference) }}
+    </fieldset>
+    <fieldset class="border p-4 mb-4">
+        <legend class="w-auto">{{ 'compliance.disputes.fieldset.sideEffects'|trans }}</legend>
+        <p class="small">{{ 'compliance.disputes.fieldset.not_all_options_applicable'|trans }}</p>
+        {{ form_row(form.sideEffects) }}
+    </fieldset>
+    <fieldset class="border p-4 mb-4">
+        <legend class="w-auto">{{ 'compliance.disputes.fieldset.accountingFlags'|trans }}</legend>
+        <p class="small">{{ 'compliance.disputes.fieldset.fallback_to_provider'|trans }}</p>
+        {{ form_row(form.accountingFlags) }}
+    </fieldset>
+    <fieldset class="border p-4 mb-4">
+        <legend class="w-auto">{{ 'compliance.disputes.fieldset.audit'|trans }}</legend>
+        {{ form_row(form.adjustmentPurpose) }}
+    </fieldset>
+    <fieldset class="border p-4 mb-4">
+        <legend class="w-auto">{{ 'compliance.disputes.fieldset.confirmation'|trans }}</legend>
+        {{ form_row(form.responsibilityAcknowledgement) }}
+        <blockquote>
+            <pre>{{ app.user.email }}<br>{{ 'now' | date('d M Y') }}</pre>
+        </blockquote>
+    </fieldset>
+    {{ form_rest(form) }}
+{% endblock %}

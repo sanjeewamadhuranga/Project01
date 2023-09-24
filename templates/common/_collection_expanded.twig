@@ -1,0 +1,28 @@
+{% use "common/form.html.twig" %}
+
+{% block collection_widget %}
+    <div
+         id="{{ form.vars.id }}_items"
+         data-prototype="{{ form_row(form.vars.prototype)|spaceless|e('html_attr') }}"
+         data-index="{{ form|length > 0 ? form|last.vars.name + 1 : 0 }}"
+         class="mb-2"
+    >
+        {{ form_widget(form) }}
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-end">
+            {{ block('collection_entry_add_btn') }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block collection_entry_row %}
+    <div class="card-body mb-2" style="background-color: white !important;" id="{{ form.vars.id }}">
+        {{ form_widget(form) }}
+        <div class="d-flex flex-row-reverse">
+            {{ block('collection_entry_delete_btn') }}
+        </div>
+    </div>
+{% endblock %}
+

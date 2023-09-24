@@ -1,0 +1,21 @@
+{% extends 'security/base.html.twig' %}
+
+{% block title %}Reset password{% endblock %}
+
+{% block card_content %}
+    {% for label, messages in app.flashes(['warning', 'error', 'success', 'danger']) %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <h5 class="text-center">Reset new password</h5>
+    {{ form_start(resetForm,  { attr: {class: 'mt-3'}}) }}
+        {{ form_row(resetForm.plainPassword) }}
+        {{ form_rest(resetForm) }}
+        <button class="btn btn-primary d-block w-100 mt-3" type="submit">Set password</button>
+    {{ form_end(resetForm) }}
+{% endblock %}

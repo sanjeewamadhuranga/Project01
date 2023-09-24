@@ -1,0 +1,70 @@
+{% extends 'security/base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block card_content %}
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+    {% if app.user %}
+        <div class="mb-3">
+           {{ 'log_in_as' | trans}} {{ app.user.username }}, <a href="{{ path('logout') }}">{{ 'security.logout' | trans }}</a>
+        </div>
+    {% endif %}
+
+    {% if needSetup %}
+        <div class="alert alert-warning fade show" role="alert">
+            It appears that there are no administrators in the database.<br/>
+            Please click this <a href="{{ path('setup_accounts') }}">link</a>.
+        </div>
+    {% endif %}
+
+    {% if not config.settings.isPasswordLoginDisabled %}
+        <div class="row flex-between-center mb-2">
+            <div class="col-auto">
+                <h5>{{ 'security.login'|trans }}</h5>
+            </div>
+        </div>
+        <form method="post">
+            <div class="mb-3">
+                <input class="form-control" type="email" value="{{ last_username }}" name="username" autocomplete="Username" required {% if last_username|length == 0 %}autofocus{% endif %} placeholder="Username" />
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="password" placeholder="Password" name="password" required {% if last_username|length > 0 %}autofocus{% endif%} />
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <div class="mb-3">
+                <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Log in</button>
+            </div>
+            <div class="row flex-between-center">
+                <div class="col-auto">
+                    <div class="form-check mb-0">
+                        <input class="form-check-input" type="checkbox" id="remember-me" name="remember" >
+                        <label class="form-check-label" for="remember-me">Remember username</label>
+                    </div>
+                </div>
+                <div class="col-auto"><a class="fs--1" href="{{ path('password_reset_request') }}">Forgot Password?</a></div>
+            </div>
+        </form>
+    {% endif %}
+
+
+    {% if config.features.SSOEnabled %}
+        <div class="position-relative mt-4">
+            <hr class="bg-300" />
+            <div class="divider-content-center">
+                {% if not config.settings.isPasswordLoginDisabled %}
+                 {{ 'or' | trans }}
+                {% endif %}
+                {{ 'log_in_with' | trans }}
+            </div>
+        </div>
+        <div class="row g-2 mt-2">
+            <div class="col">
+                <a class="btn btn-outline-google-plus btn-sm d-block w-100" href="{{ path('connect_google') }}">
+                    <span class="fab fa-google me-2" data-fa-transform="grow-8"></span> Google
+                </a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

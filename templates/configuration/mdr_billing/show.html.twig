@@ -1,0 +1,79 @@
+{% extends 'common/base.html.twig' %}
+{% import '/common/macros/macros.html.twig' as commonMacros %}
+{% block title %}{{ item }}{% endblock %}
+
+{% block back_url %}{{ path('configuration_mdr_billing_index') }}{% endblock %}
+
+{% set title , subTitle  = 'mdr_billing.title'|trans, 'mdr_billing.subTitle'|trans() %}
+
+{# @var item \App\Domain\Document\MdrBilling #}
+
+{% block paragraph %}
+    <div class="card-body bg-light border-top">
+        <div class="row mb-3">
+            <div class="col-lg col-xxl-6">
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'mdr_billing.label.remittance'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.remittance) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'mdr_billing.label.mdr'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.mdr }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'mdr_billing.label.fixedFeeCurrency'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.fixedFeeCurrency|default('mdr_billing.transactionCurrency'|trans) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg col-xxl-6">
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'mdr_billing.label.processingFixed'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ (item.processingFixed / 100)|format_number({}, 'currency') }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'mdr_billing.label.processingPercentage'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ (item.processingPercentage / 100)|format_number({max_fraction_digit: 10}, 'percent') }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'mdr_billing.label.platformFixed'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ (item.platformFixed / 100)|format_number({}, 'currency') }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'mdr_billing.label.platformPercentage'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ (item.platformPercentage / 100)|format_number({max_fraction_digit: 10}, 'percent') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

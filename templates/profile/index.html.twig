@@ -1,0 +1,107 @@
+{% extends 'app.html.twig' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0 text-900 text-19">Profile</h5>
+    </div>
+</div>
+
+{% if config.features.is2FAEnforced() and app.user.is2FaEnabled == false %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ 'merchant.users.2fa_enforced'|trans }}
+        <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endif %}
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0 text-900 text-19">{{ 'myDetails' | trans }}</h5>
+    </div>
+    <div class="card-body bg-light ">
+        <div class="row">
+            <div class="col-5 col-sm-4">
+                <p class="fw-semi-bold mb-1">{{ 'administrators.username' |trans }}</p>
+            </div>
+            <div class="col card-details">{{ app.user }}</div>
+        </div>
+    </div>
+</div>
+
+{% form_theme form 'profile/_profile_form_theme.html.twig' %}
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0 text-900 text-19">{{ 'personalisation' | trans }}</h5>
+    </div>
+    <div class="card-body bg-light">
+        {{ form_start(form) }}
+        {{ form_rest(form) }}
+
+        <div class="text-end mt-3">
+            <button class="btn btn-primary" type="submit">
+                {{ 'submit'|trans }}
+            </button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0 text-900 text-19">{{ 'security.title' | trans }}</h5>
+    </div>
+    <div class="card-body bg-light">
+        <div class="w-100 d-flex flex-column">
+            <div class="col">
+                <p class="fw-semi-bold mb-1">{{ 'administrators.password' |trans }}</p>
+            </div>
+            <div class="col pb-4 mb-4" style="border-bottom: 3px dashed #d8e2ee">
+                {% if not config.settings.isPasswordLoginDisabled %}
+                <a class="btn btn-falcon-default" href="{{ path('profile_change_password') }}">
+                    {{ 'administrators.changePassword' | trans }}</a>
+                {% else %}
+                {{ 'security.password_login_disabled' |trans }}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="w-100 d-flex flex-column">
+            <div class="col d-flex">
+                <p class="fw-semi-bold mb-1">{{ 'administrators.multiFactorAuthentication'|trans }}</p>
+                {% if not config.settings.isPasswordLoginDisabled %}
+                    {% if app.user.isGoogleAuthenticatorEnabled or app.user.smsAuthenticationEnabled %}
+                        <div class="badge badge-soft-success rounded-pill d-flex align-items-center fs--2 mx-1">
+                            <em class="fas fa-check" style="margin-right: 4px;"></em> {{ 'security.2fa.enabled'|trans }}
+                        </div>
+                    {% else %}
+                        <div class="badge badge-soft-info rounded-pill d-flex align-items-center fs--2 fw-bold mx-1">
+                            <em class="fas fa-ban" style="margin-right: 4px;" ></em> {{ 'security.2fa.not_configured'|trans }}
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="badge badge-soft-info rounded-pill d-flex align-items-center fs--2 mx-1">
+                        <em class="fas fa-ban" style="margin-right: 4px;" ></em> {{ 'security.2fa.not_configured'|trans }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col mt-2">
+                <p class="text-600">{{ 'security.2fa.configInfo'|trans }}</p>
+            </div>
+            <div class="col">
+                {% if not config.settings.isPasswordLoginDisabled %}
+                    <a class="btn btn-falcon-default" href="{{ path('profile_2fa_security') }}">
+                        {% if app.user.is2FaEnabled() %}
+                            {{ 'security.2fa.settings'|trans }}
+                        {% else %}
+                            {{ 'security.2fa.setup'|trans }}
+                        {% endif %}
+                    </a>
+                {% else %}
+                    {{ 'security.password_login_disabled'|trans }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

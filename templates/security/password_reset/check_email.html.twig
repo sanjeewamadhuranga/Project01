@@ -1,0 +1,14 @@
+{% extends 'security/base.html.twig' %}
+
+{% block title %}Reset password{% endblock %}
+
+{% block card_content %}
+    <div class="text-center">
+        <h4 class="mb-2">Please check your email!</h4>
+        <p>An email has been sent to <strong>{{ email }}</strong>. Please click on the included link to reset your password.</p>
+        <a class="btn btn-primary btn-sm mt-3" href="{{ path('login') }}">
+            <span class="fas fa-chevron-left me-1" data-fa-transform="shrink-4 down-1"></span>
+            Return to login
+        </a>
+    </div>
+{% endblock %}

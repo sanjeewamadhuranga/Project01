@@ -1,0 +1,9 @@
+{% extends 'app.html.twig' %}
+
+{% block title %}
+    {{ title|trans }}
+{% endblock %}
+
+{% block content %}
+    <{{ component }} {% for key, value in props -%} {{ key }}="{{ value }}" {%- endfor %} />
+{% endblock %}

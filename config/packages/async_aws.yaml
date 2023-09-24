@@ -1,0 +1,12 @@
+# Read documentation at https://async-aws.com/integration/symfony-bundle.html
+async_aws:
+    config: # Will be merged with other configuration
+        debug: '%kernel.debug%'
+        region: '%env(AWS_REGION)%'
+
+    # All installed clients are automatically autowired. Use this section to customize clients
+    clients:
+        cognito_identity_provider: ~
+        s3: ~
+        sns: ~
+        sqs: ~

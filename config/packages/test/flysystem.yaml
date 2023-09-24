@@ -1,0 +1,30 @@
+flysystem:
+    storages:
+        merchant.storage:
+            adapter: 'local'
+            options:
+                directory: '%kernel.project_dir%/var/storage/merchant'
+        terminal.storage:
+            adapter: 'local'
+            options:
+                directory: '%kernel.project_dir%/var/storage/terminal'
+        discount_rate.storage:
+            adapter: 'local'
+            options:
+                directory: '%kernel.project_dir%/var/storage/discount_rate'
+        compliance_reports.storage:
+            adapter: 'local'
+            options:
+                directory: '%kernel.project_dir%/var/storage/compliance_reports'
+        attachments.storage:
+            adapter: 'local'
+            options:
+                directory: '%kernel.project_dir%/var/storage/attachments'
+        card.storage:
+            adapter: 'local'
+            options:
+                directory: '%kernel.project_dir%/var/storage/card'
+        cloudinary.storage:
+            adapter: 'local'
+            options:
+                directory: '%kernel.project_dir%/var/storage/cloudinary'

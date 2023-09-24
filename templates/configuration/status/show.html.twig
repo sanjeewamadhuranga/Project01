@@ -1,0 +1,85 @@
+{% extends 'common/base.html.twig' %}
+{% import '/common/macros/macros.html.twig' as commonMacros %}
+
+{% block title %} {{ item.title }} {% endblock %}
+{% block back_url %}{{ path('configuration_status_index') }}{% endblock %}
+
+{# @var item \App\Domain\Document\ApiStatus #}
+
+{% set subTitle , title = 'config_status.subTitle'|trans(), 'config_status.title'|trans() %}
+
+{% block paragraph %}
+    <div class="card-body bg-light border-top">
+        <div class="row mb-3">
+            <div class="col-lg col-xxl-6">
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'config_status.label.active'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.active) | default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'config_status.label.status'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.status.readable|trans | default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'config_status.label.url'|trans }}</p>
+                    </div>
+                    <div class="col">
+                       <a href="{{ item.action}}" target="_blank" rel="noopener noreferrer">{{ item.action | default(commonMacros.no_data()) }}</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'config_status.label.title'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.title | default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'config_status.label.message'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.message | default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg col-xxl-6">
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'config_status.label.platform'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.platform.readable|trans | default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'config_status.label.apiVersion'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.apiVersion | default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'config_status.label.appVersion'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.appVersion | default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

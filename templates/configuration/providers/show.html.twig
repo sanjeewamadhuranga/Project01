@@ -1,0 +1,478 @@
+{% extends 'common/base.html.twig' %}
+{% import '/common/macros/macros.html.twig' as commonMacros %}
+{% block title %}{{ item }}{% endblock %}
+
+{% block back_url %}{{ path('configuration_providers_index') }}{% endblock %}
+
+{% set title , subTitle  = 'config_provider.title'|trans(), 'discount_code.subTitle'|trans() %}
+
+{# @var item \App\Domain\Document\Provider\Provider #}
+
+{% block paragraph %}
+    <div class="card-body bg-light border-top">
+        <div class="row mb-3">
+            <h5 class="fw-semi-bold ls mb-3 text-uppercase">{{ 'config_provider.legend.status' | trans }}</h5>
+            <div class="col-lg col-xxl-6">
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.title'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.title|default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.group'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.group|default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg col-xxl-6">
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.enabled'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.enabled) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3 border-top pt-1">
+            <h5 class="fw-semi-bold ls mb-3 text-uppercase">{{ 'config_provider.legend.logo&Icons' | trans }}</h5>
+            <div class="col-lg col-xxl-6">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.logoFile'|trans }}</p>
+                    </div>
+                    <div class="col-12">
+                        {% if item.logo is not null %}
+                            <img src="{{ vich_uploader_asset(item, 'logoFile') }}" class="mw-100" alt="Logo image"/>
+                        {% else %}
+                            {{ commonMacros.no_data() }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.shopBadgeFile'|trans }}</p>
+                    </div>
+                    <div class="col-12">
+                        {% if item.shopBadge is not null %}
+                            <img src="{{ vich_uploader_asset(item, 'shopBadgeFile') }}" class="mw-100" alt="Shop badge image"/>
+                        {% else %}
+                            {{ commonMacros.no_data() }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg col-xxl-6">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.logoGrayScale'|trans }}</p>
+                    </div>
+                    <div class="col-12">
+                        {% if item.logoGrayscale is not null %}
+                            <img src="{{ vich_uploader_asset(item, 'logoGrayscaleFile') }}" class="mw-100" alt="Grayscale logo image"/>
+                        {% else %}
+                            {{ commonMacros.no_data() }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.icon'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.icon | default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3 border-top pt-1">
+            <h5 class="fw-semi-bold ls mb-3 text-uppercase">{{ 'config_provider.legend.presentation' | trans }}</h5>
+            <div class="col-lg col-xxl-6">
+                <div class="row">
+                    <div class="col-6 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.description'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.description | default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.customerDescription'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.customerDescription | default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.ecommercePreferredMode'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.ecommercePreferredMode.readable|default|trans|default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.brandColor'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        <span class="badge rounded-pill text-dark" style="background-color: #{{ item.brandColor }}">{{ item.brandColor }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg col-xxl-6">
+                <div class="row">
+                    <div class="col-6 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.sortPosition'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.sortPosition|default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.hiddenOnMobileResponsiveView'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.hiddenOnMobileResponsiveView) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.excludeFromOptionListMobilePos'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.excludeFromOptionListMobilePos) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.excludeFromOptionListPaymentPortal'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.excludeFromOptionListPaymentPortal) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3 border-top pt-1">
+            <h5 class="fw-semi-bold ls mb-3 text-uppercase">{{ 'config_provider.legend.settlementConfig' | trans }}</h5>
+            <div class="col-lg col-xxl-6">
+                <div class="row">
+                    <div class="col-6 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.currencies'|trans }}</p>
+                    </div>
+                    <div class="col">
+                           <table class="table table-bordered">
+                               {% for currency in item.currencies %}
+                               <tbody>
+                               <tr>
+                                   <th scope="row"> {{ currency }}</th>
+                               </tr>
+                               </tbody>
+                               {% else %}
+                               <tr><th scope="row">{{ commonMacros.no_data() }}</th></tr>
+                               {% endfor %}
+                           </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg col-xxl-6">
+                <div class="row">
+                    <div class="col-6 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.externalImport'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.externalImport) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.excludeFromRemittance'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.excludeFromRemittance) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.fixedMdrCode'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.fixedMdrCode | default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.autoCredit'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.autocredit) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3 border-top pt-1">
+            <h5 class="fw-semi-bold ls mb-3 text-uppercase">{{ 'config_provider.legend.configuration' | trans }}</h5>
+            <div class="col-lg col-xxl-6">
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.value'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.value | default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.userAgentHeaderString'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.userAgentHeaderString | default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.buyerIdentifierSupport'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.buyerIdentifierSupport) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.unified'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.unified) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.announceToProvider'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.announceToProvider) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.reAnnounceToProvider'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.canReannounceToProvider) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.wallet'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.wallet) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.isSecAcqRequiredForThisPrimary'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.isSecAcqRequiredForThisPrimary) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.useForSecondaryAcquiring'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.useForSecondaryAcquiring) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg col-xxl-6">
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.ecommerce'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.ecommerce) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.mobile'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.mobile) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.announceCustomerPresent'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.announceWalletScanToProvider) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.preSelectScanMode'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.preSelectScanMode) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.preauth'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.preauth) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.paymentVoid'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.void) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.recurringBillingSupport'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.recurringBillingSupport) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.virtualProvider'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.virtualProvider) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.nativeQrCodeSupport'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.nativeQrCodeSupport) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.secondaryAcquiringCdeUrl'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ item.secondaryAcquiringCdeUrl | default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3 border-top pt-1">
+            <h5 class="fw-semi-bold ls mb-3 text-uppercase">{{ 'config_provider.legend.refunds' | trans }}</h5>
+            <div class="col-log col-xxl-6">
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.refundWindowDays'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.preSelectScanMode) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.paymentRefund'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.canRefundIfConfirmed) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-log col-xxl-6">
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.paymentPartialRefund'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.canPartialRefundIfConfirmed) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'config_provider.label.canIncrementalPartialRefundIfConfirmed'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ commonMacros.booleanLabel(item.canIncrementalPartialRefundIfConfirmed) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3 border-top pt-1">
+            <h5 class="fw-semi-bold ls mb-3 text-uppercase">{{ 'config_provider.legend.fx' | trans }}</h5>
+            <div class="row">
+                <div class="col-12 col-sm-12">
+                    <p class="fw-semi-bold mb-1">{{ 'config_provider.label.baseCurrency'|trans }}</p>
+                </div>
+                <div class="col">
+                    {{ item.baseCurrency | default(commonMacros.no_data()) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-12">
+                    <p class="fw-semi-bold mb-1">{{ 'config_provider.label.fxEnabled'|trans }}</p>
+                </div>
+                <div class="col">
+                    {{ commonMacros.booleanLabel(item.fxEnabled) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3 border-top pt-1">
+            <h5 class="fw-semi-bold ls mb-3 text-uppercase">{{ 'config_provider.legend.currencyLimit' | trans }}</h5>
+
+            {% for currencyLimit in item.currencyLimits %}
+            <div class="row">
+                <div class="col-12 col-sm-12">
+                    <p class="fw-semi-bold mb-1">{{ 'currency_limit.currency'|trans }}</p>
+                </div>
+                <div class="col">
+                    {{ currencyLimit.currency | default(commonMacros.no_data()) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-12">
+                    <p class="fw-semi-bold mb-1">{{ 'currency_limit.minimum'|trans }}</p>
+                </div>
+                <div class="col">
+                    {{ currencyLimit.min | default(commonMacros.no_data()) }}
+                </div>
+            </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <p class="fw-semi-bold mb-1">{{ 'currency_limit.maximum'|trans }}</p>
+                    </div>
+                    <div class="col">
+                        {{ currencyLimit.max | default(commonMacros.no_data()) }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}

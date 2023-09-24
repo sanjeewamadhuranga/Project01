@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html class="{% block html_class %}{% endblock %}" dir="{{ intl_direction() }}" lang="{{ app.request.locale }}">
+{% set theme = encore_entry_exists('themes/' ~ branding.theme) ? branding.theme : branding.defaultTheme %}
+<head>
+    {% if internal_url|default %}
+    <base href="{{ internal_asset_url }}">
+    {% endif %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>{% block title %}PDF{% endblock %} | {{ branding.owner }}</title>
+    {{ encore_entry_link_tags('themes/' ~ theme) }}
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+<main class="main" id="top">
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</main>
+<div id="toast-container"></div>
+</body>
+</html>

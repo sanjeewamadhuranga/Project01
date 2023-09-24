@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="main" id="top">
+        <div
+            class="{% block container_class %}{{ app.user.fluidLayout|default ? 'container-fluid' : 'container' }}{% endblock %}"
+            data-layout="container"
+            id="app"
+        >
+            {% include 'partials/_sidebar.html.twig' %}
+            <div class="content">
+                {% include 'partials/_nav.html.twig' %}
+                <div class="row">
+                    <div class="col-lg-12">
+                        {% for label, messages in app.flashes(['warning', 'error', 'success', 'danger']) %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </main>
+{% endblock %}

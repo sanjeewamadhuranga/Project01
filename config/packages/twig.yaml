@@ -1,0 +1,22 @@
+twig:
+    paths:
+        '%kernel.project_dir%/assets/themes': themes
+        public/: public
+    default_path: "%kernel.project_dir%/templates"
+    globals:
+        config: '@App\Domain\Settings\Config'
+        branding: '@App\Domain\Settings\Branding'
+        google_maps_api_token: "%google_map_api_key%"
+        app_version: "%env(APP_VERSION)%"
+        app_environment: "%env(APP_ENVIRONMENT)%"
+        sentry: '@Sentry\State\HubInterface'
+        internal_asset_url: "%env(INTERNAL_ASSET_URL)%"
+    form_themes:
+        - bootstrap_5_layout.html.twig
+        - common/form.html.twig
+    date:
+        format: "Y-m-d H:i:s P"
+
+when@test:
+    twig:
+        strict_variables: true

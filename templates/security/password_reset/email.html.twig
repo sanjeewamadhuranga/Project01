@@ -1,0 +1,23 @@
+{% set theme = encore_entry_exists('themes/' ~ branding.theme) ? branding.theme : branding.defaultTheme %}
+{% apply inline_css(encore_entry_css_source('themes/' ~ theme)) %}
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel='stylesheet' type='text/css'>
+<div class="email">
+	<div class="email-template">
+		<div class="email-template-logo">
+			<img class="email-template-img" src="{{ email.image('@themes/'~ branding.theme ~'/logo.png') }}" alt="{{ branding.theme }}" height="40"/>
+		</div>
+		<div class="email-template-saluation">Hi
+			{{user.username}},</div>
+
+		<div class="email-template-body">
+			You have requested a password reset for your  account. Click on the link below to reset your password.
+		</div>
+		<a class="btn btn-primary btn-lg email-template-resetbutton" role="button" href="{{ url('password_reset_reset', {token: user.confirmationToken}) }}">
+			Reset my password
+		</a>
+	</div>
+	<div class="email-template-footer">Powered by
+		<span class="email-brandname">{{ branding.theme }}</span>
+	</div>
+</div>
+{% endapply %}

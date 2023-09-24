@@ -1,0 +1,12 @@
+App\Domain\Document\Country:
+  country_test:
+
+App\Domain\Document\DiscountCode:
+  discount_code_test:
+    title: 'test'
+    description: 'test'
+    code: 'test'
+
+App\Domain\Document\Integration:
+  integration_test:
+    name: 'test'

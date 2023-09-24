@@ -1,0 +1,66 @@
+{% extends 'app.html.twig' %}
+
+{% block content %}
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <h5>
+                        <a href="{{ path('profile_2fa_get_app') }}" class="btn">
+                            <span class="fas fa-arrow-left"></span>
+                        </a>
+                        {{ 'security.2fa.setupTwoFactorAuth'|trans }}
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3 mb-lg-0">
+        <div class="bg-light card-header">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="nav nav-pills" role="tablist">
+                        <a style="padding:0.125rem 1rem;" class="btn text-success" href="{{ path('profile_2fa_get_app') }}">
+                            <em class="fas fa-check" ></em>
+                            {{ 'security.2fa.tabs.getApp'|trans }}
+                        </a>
+
+                        <a style="padding:0.125rem 1rem;" class="btn {{isSuccess ? 'text-success' : 'btn-primary'}}">
+                            {% if isSuccess %} <em class="fas fa-check" ></em> {% endif %}
+                            {{ 'security.2fa.tabs.linkApp'|trans }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white card-body">
+
+            {% if isSuccess %}
+                {{ include('profile/_successfully_enabled_2fa.html.twig') }}
+            {% else %}
+                <h4 class="text-900 mb-4">{{ 'security.2fa.linkApp.title'|trans }}</h4>
+                <p class="text-900 fw-semi-bold text-16 mb-2"> {{ 'security.2fa.form.step1'|trans }} </p>
+                <p class="text-650 text-16 mb-2"> {{ 'security.2fa.form.intro1'|trans }} </p>
+                <div class="row flex-column g-2 h-100 ">
+                    <div class="col-md-6" style="border-bottom: 3px dashed #d8e2ee">
+                        <img src="{{ qr_code_data_uri(qrContent, 'mfa') }}" alt="mfa-qr" />
+                        <p class="text-650 text-16 mb-2"> {{ 'security.2fa.form.dontHaveCode'|trans}} <strong class="text-decoration-underline"> {{ 'enterCode'|trans}} </strong></p>
+
+                        <div class="text-center">
+                            <p class="mb-3">
+                                <code class="p-3 user-select-all">{{ app.user.googleAuthenticatorSecret }}</code>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-4">
+                        <p class="text-900 fw-semi-bold text-16 mb-2"> {{ 'security.2fa.form.step2'|trans }} </p>
+                        <p class="text-650 text-16 mb-2"> {{ 'security.2fa.form.intro2'|trans }} </p>
+                        {{ form(form) }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

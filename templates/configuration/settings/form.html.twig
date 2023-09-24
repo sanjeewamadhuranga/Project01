@@ -1,0 +1,34 @@
+{% extends 'common/createUpdate.html.twig' %}
+
+{% set title, subTitle = item|default('config_settings.addNew'|trans), 'config_settings.details'|trans %}
+
+{% set backUrl = path('configuration_settings_index') %}
+
+{% block back_url %}{{ backUrl }}{% endblock %}
+
+{% block card_header_append %}
+    {% if item.id %}
+
+        {% set typeOptions = ['plain' ,'collection', 'object', 'bool'] %}
+
+        {% if type == 'object' %}
+            {% set typeOptions = ['object', 'bool'] %}
+        {% elseif type == 'collection' %}
+            {% set typeOptions = ['collection', 'object', 'bool'] %}
+        {% endif %}
+
+        <div class="dropdown">
+            <button class="btn-falcon-default btn btn-primary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ 'config_settings.type'|trans }}
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                {% for typeOption in typeOptions %}
+                    {% set route = path('configuration_settings_edit', { name : item.name, type: typeOption}) %}
+                    <li ><a class="dropdown-item" href="{{ route }}">{{ "config_settings.#{typeOption}" |trans }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    {% endif %}
+{% endblock %}
+

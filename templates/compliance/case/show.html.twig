@@ -1,0 +1,156 @@
+{% extends 'common/base.html.twig' %}
+{% import 'common/macros/macros.html.twig' as macros %}
+
+{% block title %} {{ item.id }} {% endblock %}
+
+{% block back_url %}{{ path('compliance_case_index') }}{% endblock %}
+
+{% set title  = 'compliance.case.title.case_detail'|trans() %}
+
+{# @var item \App\Domain\Document\Compliance\PayoutBlock #}
+
+{% block paragraph %}
+    <div class="card-body bg-light border-top border-bottom">
+        <div class="row">
+            <div class="col-lg col-xxl-6">
+                <ul class="nav nav-pills mb-3" role="tablist">
+                    <li class="nav-item mb-3">
+                        <a class="nav-link active"  data-bs-toggle="tab" href="#details-tab" role="tab" aria-controls="pill-tab-home" aria-selected="true">
+                            {{ 'compliance.case.tabs.details' | trans }}
+                        </a>
+                    </li>
+                    <li class="nav-item mb-3">
+                        <a class="nav-link"  data-bs-toggle="tab" href="#audit-trail-tab" role="tab" aria-controls="pill-tab-profile" aria-selected="false">
+                            {{ 'compliance.case.tabs.audit_trail' | trans }}
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="tab-pane fade show active" id="details-tab" role="tabpanel">
+                    {{ macros.detailsRow( 'compliance.case.label.id'|trans , item.id|default(macros.no_data())) }}
+                    {{ macros.detailsRow( 'compliance.case.label.reason'|trans , item.reason.value|default(macros.no_data())) }}
+                    {{ macros.detailsRow( 'compliance.case.label.created_on'|trans , item.createdAt|date|default(macros.no_data())) }}
+
+                    <div class="row">
+                        <div class="col-6 col-sm-5 compliance-case-lable">
+                            <p class="fw-semi-bold mb-1">
+                                {{ 'compliance.case.label.company'|trans }}
+                            </p>
+                        </div>
+                        <div class="col">
+                            <a href="{{ path('merchants_overview', {id: item.company.id}) }}">
+                                {{ item.company.registeredName }}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 col-sm-5 compliance-case-lable">
+                            <p class="fw-semi-bold mb-1">
+                                {{ 'compliance.case.label.risk_profile'|trans }}
+                            </p>
+                        </div>
+                        <div class="col">
+                            {% if item.company.riskProfile %}
+                                <a href="{{ path('compliance_risk_profile_show', {id: item.company.riskProfile.id}) }}">{{ item.company.riskProfile.code }}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 col-sm-5">
+                            <p class="fw-semi-bold mb-1">
+                                {{ 'compliance.case.label.status'|trans }}
+                            </p>
+                        </div>
+                        <div class="col">
+                            {{ macros.caseStatusPill(item) }}
+                        </div>
+                    </div>
+
+                    {{ macros.detailsRow('compliance.case.label.assigned_handler'|trans , item.handler|default('compliance.case.label.not_assigned'|trans)) }}
+                    {{ macros.detailsRow('compliance.case.label.assigned_approver'|trans , item.approver|default('compliance.case.label.not_assigned'|trans)) }}
+
+                    {% if item.comments %}
+                        <div class="row">
+                            <div class="col-6 col-sm-5">
+                                <p class="fw-semi-bold mb-1">
+                                    {{ 'compliance.case.label.comments'|trans }}
+                                </p>
+                            </div>
+                            <div class="col">
+                                {{ item.comments }}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="fade show active" id="audit-trail-tab" role="tabpanel"></div>
+            </div>
+
+        </div>
+    </div>
+    <div class="card-footer p-4"></div>
+{% endblock %}
+
+{% block content %}
+    {{ parent() }}
+
+    {% if form is defined %}
+        <div class="card mb-3">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h5 class="mb-0">
+                            {{ 'compliance.case.your_actions'|trans }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body bg-light">
+                <div class="row">
+                    <div class="col-lg">
+                        {{ form(form) }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    {% endif %}
+
+    <div class="card">
+        <div class="card-body bg-light border-top border-bottom p-0">
+            <case-transactions-list id="{{ item.id }}" />
+        </div>
+    </div>
+
+    {% if item.reviewed %}
+        {% include 'compliance/case/details/recommendations.html.twig' %}
+    {% endif %}
+
+    {% if assumeReviewForm|default %}
+        {% include 'compliance/case/details/assumeReview.html.twig' %}
+    {% endif %}
+
+    {% if assumeApproveForm|default %}
+        {% include 'compliance/case/details/assumeApprove.html.twig' %}
+    {% endif %}
+
+    {% if assignReviewForm|default %}
+        {% include 'compliance/case/details/assignReview.html.twig' %}
+    {% endif %}
+
+    {% if assignApproveForm|default %}
+        {% include 'compliance/case/details/assignApprove.html.twig' %}
+    {% endif %}
+
+    {% if reviewForm|default %}
+        {% include 'compliance/case/details/review.html.twig' %}
+    {% endif %}
+
+    {% if approveForm|default %}
+        {% include 'compliance/case/details/approve.html.twig' %}
+    {% endif %}
+
+{% endblock %}

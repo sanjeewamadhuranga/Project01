@@ -1,0 +1,27 @@
+endroid_qr_code:
+    default:
+        writer: Endroid\QrCode\Writer\PngWriter
+        size: 300
+        margin: 10
+        encoding: 'UTF-8'
+        errorCorrectionLevel: 'low'
+        roundBlockSizeMode: 'margin'
+        validateResult: false
+    svg:
+        writer: Endroid\QrCode\Writer\SvgWriter
+        size: 300
+        margin: 10
+        encoding: 'UTF-8'
+        errorCorrectionLevel: 'low'
+        roundBlockSizeMode: 'margin'
+        validateResult: false
+    mfa:
+        writer: Endroid\QrCode\Writer\SvgWriter
+        writerOptions:
+            exclude_xml_declaration: true # default: false
+        size: 200
+        margin: 10
+        encoding: 'UTF-8'
+        errorCorrectionLevel: 'low' # 'low', 'medium', 'quartile', or 'high'
+        roundBlockSizeMode: 'margin'
+        validateResult: false

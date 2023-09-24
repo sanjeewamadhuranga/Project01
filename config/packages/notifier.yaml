@@ -1,0 +1,25 @@
+framework:
+    notifier:
+        #chatter_transports:
+        #    slack: '%env(SLACK_DSN)%'
+        #    telegram: '%env(TELEGRAM_DSN)%'
+        texter_transports:
+            messagebird: 'null://null'
+            onesignal: 'null://null'
+        #    twilio: '%env(TWILIO_DSN)%'
+        #    nexmo: '%env(NEXMO_DSN)%'
+        channel_policy:
+            # use chat/slack, chat/telegram, sms/twilio or sms/nexmo
+            urgent: ['email', 'sms']
+            high: ['email']
+            medium: ['email']
+            low: ['email']
+        admin_recipients:
+            - { email: admin@example.com }
+
+when@prod:
+    framework:
+        notifier:
+            texter_transports:
+                messagebird: 'messagebird://%env(MESSAGEBIRD_API_KEY)%@default?from=%env(setting:SMS_ORIGINATOR)%'
+                onesignal: 'onesignal://%env(ONESIGNAL_APP_ID)%:%env(ONESIGNAL_APP_AUTH_KEY)%@default'

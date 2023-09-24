@@ -1,0 +1,41 @@
+{{ form_start(approveForm) }}
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h5 class="mb-0">
+                        {{ 'compliance.case.title.your_actions'|trans }}
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body bg-light">
+            <div class="row">
+                <div class="col-lg">
+                    {{ form_row(approveForm.approveComments) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg">
+                    {{ form_row(approveForm.approved) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg">
+                    {{ app.user.email }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg">
+                    {{ "now"|date("d M Y") }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg">
+                    {{ form_row(approveForm.submit) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{{ form_end(approveForm) }}
